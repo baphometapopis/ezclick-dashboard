@@ -1,0 +1,35 @@
+/* Dropdown.css */
+
+.form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .dropdown {
+    width: 100%;
+    /* padding: 10px; */
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .disabled{
+    cursor: not-allowed;
+  }
+  
+  .dropdown.error {
+    border-color: red;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  /* You can add additional styling as needed */
+  

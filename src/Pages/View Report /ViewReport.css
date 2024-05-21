@@ -1,0 +1,173 @@
+/* ViewReportPage.css */
+
+.report-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    
+  }
+  .top-bar {
+    display: flex;
+  }
+  
+  .tab {
+    padding: 10px 15px;
+    cursor: pointer;
+  }
+  
+  .tab.active {
+    background-color: var(--Sidebar_Color); /* Example active tab background color */
+    color: #fff; /* Example active tab text color */
+    border-radius: 5px;
+  }
+  
+
+  .top-bar-content{
+    position: absolute;
+    margin-top: -21px;
+    width:max-content;
+    background-color:white;
+    display: flex;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+  }
+  /* CSS file */
+  
+  .header-logo {
+    width: 100%;
+  }
+  
+  .report-title {
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: var(--Sidebar_Color);
+    color: white; /* Text color for the title */
+    padding: 10px; /* Add padding for better appearance */
+    border-radius: 5px; /* Add rounded corners */
+  }
+  
+  .report-section {
+    margin-bottom: 30px;
+    background-color: #fff; /* Background color for the sections */
+    padding: 20px; /* Add padding for better appearance */
+    border-radius: 5px; /* Add rounded corners */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  }
+  
+
+
+  .data-row {
+    width: 33.33%; /* Each row takes up one-third of the width */
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .data-row > div {
+    margin-bottom: 5px;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    
+  }
+
+  .inspection-data-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .inspection-data-table th,
+  .inspection-data-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .inspection-data-table th {
+    background-color: var(--Sidebar_Color);
+    color: white;
+  }
+  
+  
+  .data-table td, .data-table th {
+    border: 1px solid #ddd; /* Lighter border color */
+    padding: 10px;
+  }
+  
+  .print-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .print-button:hover {
+    background-color: #0056b3;
+  }
+  
+
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .inspection-data-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .inspection-data-row {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .inspection-item {
+    height: fit-content;
+
+    width:500px;
+    padding: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .inspection-image {
+    width: 100%;
+    height: 90%;
+    object-fit: contain;
+    margin-bottom: 10px;
+  }
+  
+  .inspection-name {
+    text-align: center;
+  }
+  
+  .button-container {
+    margin-top: 20px;
+  }
+  
+  .download-button,
+  .preview-button {
+    margin-right: 10px;
+  }
+  
+
+  @media print {
+    .data-table {
+      /* Adjust padding as needed */
+      padding: 5px;
+    }
+  }
+  
+  /* Ensure the header image appears on all printed pages */
+  @page {
+    margin: 0;
+  }
+
+
+  

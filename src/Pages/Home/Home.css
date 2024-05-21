@@ -1,0 +1,71 @@
+/* Home.css */
+
+.card-container {
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    /* min-height: 100vh; */
+    padding: 20px;
+  }
+  
+  .card {
+    margin-bottom: 20px;
+
+    width: 100%;
+    max-width: 500px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .card-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  
+  .upload-button,
+  .download-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .upload-button {
+    background-color: #007bff;
+    color: #ffffff;
+  }
+  
+  .download-button {
+    background-color: #28a745;
+    color: #ffffff;
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .card {
+      max-width: 90%;
+    }
+  
+    .button-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .upload-button,
+    .download-button {
+      margin-top: 10px;
+      width: 100%;
+    }
+  }
+  

@@ -1,24 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import AppLayout from './AppLayout';
+import HomePage from './Pages/Home/Home';
+import LoginPage from './Pages/Login/Login';
+import ProposalListPage from './Pages/ProposalList';
+import ProposalPage from './Pages/ProposalPage/ProposalPage';
+import SuccessPage from './Pages/SuccessPage/SuccessPage';
+import ViewReportPage from './Pages/View Report /ViewReport';
+import { fetchDataLocalStorage } from './Util/LocalStorage';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check if token is present in local storage
+    const token =fetchDataLocalStorage('claim_login');
+    if (token) {
+      setIsLoggedIn(true);
+
+
+    }
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='appContainer'>
+                <ToastContainer />
+
+      <Router>
+        <Routes>
+          {/* If logged in successfully, navigate to Home page */}
+          {isLoggedIn ? (
+            <>
+            {/* <Route path="/Home" element={<AppLayout><Navigate to="/Home" /></AppLayout>} /> */}
+            <Route path="/" element={<AppLayout><HomePage /></AppLayout>} />
+            <Route path="/proposal" element={<AppLayout><ProposalPage /></AppLayout>} />
+            <Route path="/proposalList" element={<AppLayout><ProposalListPage /></AppLayout>} />
+            <Route path="/ViewReportPage" element={<AppLayout><ViewReportPage /></AppLayout>} />
+            <Route path="/SuccessPage" element={<AppLayout><SuccessPage /></AppLayout>} />
+
+
+            </>
+          ) : (
+            <Route path="/" element={<LoginPage />} />
+          )}
+         
+        </Routes>
+      </Router>
     </div>
   );
 }

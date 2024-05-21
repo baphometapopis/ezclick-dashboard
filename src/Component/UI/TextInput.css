@@ -1,0 +1,29 @@
+/* TextInput.css */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px; /* Adjust as needed */
+    width: 250px;
+  }
+  
+  label {
+    margin-bottom: 5px; /* Adjust as needed */
+  }
+  
+  input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+  }
+  
+  input.error {
+    border-color: red;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 5px; /* Adjust as needed */
+  }
+  

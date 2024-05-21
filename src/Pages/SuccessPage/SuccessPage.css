@@ -1,0 +1,75 @@
+/* SuccessPage.css */
+
+.success-page {
+    text-align: center;
+    padding: 20px;
+  }
+  
+
+  .successContainer{
+
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 450px;
+    margin: 0 auto;
+ 
+}
+  .success-image {
+    width: 200px;
+    margin-bottom: 20px;
+  }
+  
+  .proposal-info {
+    margin-bottom: 20px;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap:10px
+  }
+  
+  .links {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    width: 100%;
+
+  }
+  
+  .email-message{
+    text-align: center;
+    font-weight: bold;
+  }
+  .link-container {
+    margin: 0 10px;
+  }
+  
+  .qr-codes {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  .qr-code-container {
+    margin: 0 10px;
+  }
+  
+  .break-in-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .break-in-button:hover {
+    background-color: #0056b3;
+  }
+  

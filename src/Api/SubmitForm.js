@@ -1,0 +1,65 @@
+import { API_BASE_URL } from "./Api_Endpoint";
+
+export const submitForm=async(data,user_id)=>{
+  console.log(data)
+    try {
+        var myHeaders = new Headers();
+        var formdata = new FormData();
+        formdata.append("proposal_no", data?.proposal_no);
+        formdata.append("proposal_id", data?.id);
+
+        formdata.append("insured_name", data?.insured_name);
+        formdata.append("proposal_start_date", data?.proposal_start_date);
+        formdata.append("proposal_end_date", data?.proposal_end_date);
+        formdata.append("mobile_no", data?.dmobile_noata);
+        formdata.append("email", data?.email);
+        formdata.append("nominee_name", data?.nominee_name);
+        formdata.append("insured_address", data?.insured_address);
+        // formdata.append("hypothecation_lease", data?.hypothecation_lease);
+        formdata.append("registration_no", data?.v_registration_no);
+        formdata.append("product_type_id", data?.v_product_type_id);
+        formdata.append("make_id", data?.v_make_id);
+        formdata.append("model_id", data?.v_model_id);
+        formdata.append("variant_id", data?.v_variant_id);
+        formdata.append("engine_no", data?.v_engine_no);
+        formdata.append("chassis_no", data?.v_chassis_no);
+        formdata.append("odometer_reading", data?.v_odometer_reading);
+        formdata.append("fuel_type_id", data?.v_fuel_type_id);
+        formdata.append("manufacture_year", data?.v_manufacture_year);
+        formdata.append("cc", data?.v_cc);
+        formdata.append("color", data?.v_color);
+        formdata.append("type_of_body", data?.v_type_of_body);
+        formdata.append("nill_depreciation", data?.v_nill_depreciation);
+        formdata.append("breakin_steps", 'checkpoint');
+        formdata.append("user_id", user_id);
+
+
+
+
+
+
+
+
+        
+    
+    
+        var requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body:formdata,
+          redirect: "follow",
+        };
+    
+        const response = await fetch(
+          `${API_BASE_URL}create_proposal_details`,
+          requestOptions
+        );
+        const result = await response.text();
+    
+        return JSON.parse(result);
+      } catch (error) {
+        // Handle errors
+        console.log(error);
+      }
+
+}
