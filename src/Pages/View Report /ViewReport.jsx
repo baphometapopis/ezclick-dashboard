@@ -1,4 +1,5 @@
 // ViewReportPage.js
+import JSZip from 'jszip';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getFullReport } from '../../Api/getProposalDetails';
@@ -7,7 +8,7 @@ import Dropdown from '../../Component/UI/Dropdown';
 import { HeaderLogo } from '../../Constant/ImageConstant';
 import { fetchDataLocalStorage, storeDataLocalStorage } from '../../Util/LocalStorage';
 import './ViewReport.css'; // Importing CSS file for additional styles
-
+import { saveAs } from 'file-saver'
 
 const CustomTabs = ({ tabs }) => {
     const navigate = useNavigate();
@@ -886,9 +887,38 @@ const [status, setStatus] = useState('');
 const [isReferBackModelOpen, setIsReferBackModelOpen] = useState(false);
 const [selectedImagesReferback, setSelectedImagesReferback] = useState([]);
 const [selectedReferbackOption, setselectedReferbackOption] = useState([]);
+const [InspectedImages, setInspectedImages] = useState([]);
 
 
 
+
+const downloadImagesAsZip = async (data) => {
+  const zip = new JSZip();
+
+  // Filter the items with valid inspection images
+  const validImages = InspectedImages.filter(item => item.Inspection_Image !== 'no_image.jpg');
+
+  const downloadImage = async (url) => {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return blob;
+  };
+
+  for (const item of validImages) {
+    const imageBlob = await downloadImage(item.Inspection_Image);
+    const imageName = item.Inspection_Image.split('/').pop();
+    zip.file(imageName, imageBlob);
+  }
+
+  // Generate the zip file
+  zip.generateAsync({ type: 'blob' })
+    .then((content) => {
+      saveAs(content, 'inspection_images.zip');
+    })
+    .catch((error) => {
+      console.error('Error generating zip file:', error);
+    });
+};
 
 const handleSubmit = () => {
 
@@ -1007,6 +1037,60 @@ const openModal = (uri) => {
 
     printWindow.document.write('</body></html>');
 };
+function mapData(refData, namesData, codesData) {
+  console.log(refData, namesData, codesData);
+  let mappedArray = [];
+  
+  refData.forEach(nameItem => {
+    console.log(nameItem)
+
+    const codeItem = codesData[nameItem.code]; // Access property directly
+    const refItem = namesData.find(item => item.name === nameItem.name);
+
+    console.log(codeItem,refItem)
+      
+    if (codeItem && refItem) {
+      const mappedItem = {
+        id: refItem.id,
+        name: refItem.name,
+        is_mand: refItem.is_mand,
+        sample_image_url: refItem.sample_image_url,
+        "Inspection_Image": codeItem // Access property directly
+      };
+      mappedArray.push(mappedItem);
+      console.log(mappedArray)
+    }
+  });
+  
+
+  return mappedArray;
+}
+
+const referenceData = [
+  {"name": "Odometer with Engine on Position", "code": "autometer_engine"},
+  {"name": "Windscreen Inside to Outside", "code": "windscreen_inside_outside"},
+  {"name": "Windscreen Outside to Inside", "code": "windscreen_outside_inside"},
+  {"name": "Front Image", "code": "front_image"},
+  {"name": "Left Image", "code": "left_image"},
+  {"name": "Rear Image", "code": "rear_image"},
+  {"name": "Dicky Open", "code": "dicky_open"},
+  {"name": "Right Image", "code": "right_image"},
+  {"name": "Engraved Chassis", "code": "car_chassis_print"},
+  {"name": "Open Engine Compartment", "code": "open_engine_compartment"},
+  {"name": "Under Carriage Image", "code": "under_the_chassis_embossed_chassis_photo"},
+  {"name": "PUC Copy", "code": "puc_copy"},
+  {"name": "Dashboard Copy", "code": "dashboard_copy"},
+  {"name": "RC Copy", "code": "rc_copy"},
+  {"name": "Pervious Insurance Copy", "code": "pervious_insurances"},
+  {"name": "Selfie with car", "code": "selfie_with_car"},
+  {"name": "Additional Image1", "code": "addtion1"},
+  {"name": "Additional Image2", "code": "addtion2"},
+  {"name": "Additional Image3", "code": "addtion3"},
+  {"name": "Front Left Image", "code": "front_left_image"},
+  {"name": "Front Right Image", "code": "front_right_image"},
+  {"name": "Rear Left Image", "code": "rear_left_image"},
+  {"name": "Rear Right Image", "code": "rear_right_image"}
+]
 
 
 const handleReportData=async()=>{
@@ -1022,7 +1106,11 @@ const data ={proposal_id:ldata?.state?.data?.id,
       
     setReportData(reportRes);
 
-      console.log(reportRes,'<><><><><><><><><><><><><><><><><><><><><><>')
+      console.log(reportRes?.breakin_details,'<><><><><><><><><><><><><><><><><><><><><><>')
+      const resData = mapData(referenceData,imageInspection,reportRes?.breakin_details)
+
+      setInspectedImages(resData)
+
 
     }
 
@@ -1052,6 +1140,13 @@ const updatedImageStyles = imageStyles.map(style => {
   }
 });
 
+
+
+
+
+
+
+
   useEffect(()=>{
 
         handleReportData()
@@ -1059,7 +1154,7 @@ const updatedImageStyles = imageStyles.map(style => {
   },[])
 
 
-  useEffect(()=>{},[isPreviewModalOpen,selectedImage])
+  useEffect(()=>{},[isPreviewModalOpen,selectedImage,InspectedImages])
   
 
   return (
@@ -1218,13 +1313,13 @@ const updatedImageStyles = imageStyles.map(style => {
           <tr key={index}>
             <td><strong>{item.question}:</strong></td>
             {/* <td>{item.label}</td> */}
-            <td> {reportData?.qsn_ans?.color[inspection[index + 1].breakin_inspection_post_question_id]??'Not Submitted'}</td>
+            <td> {reportData?.qsn_ans?.question_ans[inspection[index + 1].breakin_inspection_post_question_id]??'Not Submitted'}</td>
 
             {inspection[index + 1] && (
               <React.Fragment>
                 <td><strong>{inspection[index + 1].question}:</strong></td>
                 {/* <td>{inspection[index + 1].label}</td> */}
-                <td> {reportData?.qsn_ans?.color[inspection[index + 1].breakin_inspection_post_question_id]??'Not Submitted'}</td>
+                <td> {reportData?.qsn_ans?.question_ans[inspection[index + 1].breakin_inspection_post_question_id]??'Not Submitted'}</td>
 
               </React.Fragment>
             )}
@@ -1235,21 +1330,21 @@ const updatedImageStyles = imageStyles.map(style => {
   </table>
 <div className='page-break'>
   <h2 >Inspection Image Reports</h2>
-
+  {console.log(InspectedImages)}
   <div className="inspection-data-container">
-    {imageInspection.map((item, index) => (
+    {InspectedImages.map((item, index) => (
       index % 2 === 0 && (
         <div key={index} className="inspection-data-row">
           <div className="inspection-item">
-            {item.sample_image_url ? (
+          {item.Inspection_Image!=='no_image.jpg' ? (
                 <>
-              <img src={item.sample_image_url} alt={item.name} className="inspection-image" />
+              <img src={item.Inspection_Image} alt={item.name} className="inspection-image" />
             </>
             ):<h4 className='inspection-name'>Image not uploaded</h4>}
             <div className="inspection-name">{item.name}</div>
-          {item.sample_image_url &&  <div className="button-container">
+          {item.Inspection_Image &&  <div className="button-container">
               <button className="download-button" >Download</button>
-              <button onClick={()=>openModal(item.sample_image_url)} className="preview-button" >Preview</button>
+              <button onClick={()=>openModal(item.Inspection_Image)} className="preview-button" >Preview</button>
 
             </div>}
           </div>
@@ -1270,7 +1365,7 @@ const updatedImageStyles = imageStyles.map(style => {
   
   </div>
   <div className="button-container">
-              <button className="download-button" >Download All Images</button>
+              <button onClick={downloadImagesAsZip} className="download-button" >Download All Images</button>
             </div>
 
   
@@ -1476,13 +1571,13 @@ const updatedImageStyles = imageStyles.map(style => {
   <h2 className='page-break'>Inspection Image Reports</h2>
 
   <div className="inspection-data-container">
-    {imageInspection.map((item, index) => (
+    {InspectedImages.map((item, index) => (
       index % 2 === 0 && (
         <div key={index} className="inspection-data-row">
           <div className="inspection-item">
-            {item.sample_image_url ? (
+            {item.Inspection_Image!=='no_image.jpg' ? (
                 <>
-              <img src={item.sample_image_url} alt={item.name} className="inspection-image" />
+              <img src={item.Inspection_Image} alt={item.name} className="inspection-image" />
             </>
             ):<h4 className='inspection-name'>Image not uploaded</h4>}
             <div className="inspection-name">{item.name}</div>

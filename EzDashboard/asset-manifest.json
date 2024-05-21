@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/EzDashboard/static/css/main.aafb5051.css",
+    "main.js": "/EzDashboard/static/js/main.c3b6f30f.js",
+    "static/js/453.7192f365.chunk.js": "/EzDashboard/static/js/453.7192f365.chunk.js",
+    "static/media/success.png": "/EzDashboard/static/media/success.96f633ccfdd75337bf72.png",
+    "static/media/EzClick-letter-head-header.png": "/EzDashboard/static/media/EzClick-letter-head-header.e10c5dbc9cab34af2b06.png",
+    "static/media/ezclick.png": "/EzDashboard/static/media/ezclick.ae5d47df1724cd608e68.png",
+    "static/media/placeholderimage.jpeg": "/EzDashboard/static/media/placeholderimage.1bd7bd9341f7990152a4.jpeg",
+    "service-worker.js": "/EzDashboard/service-worker.js",
+    "index.html": "/EzDashboard/index.html",
+    "main.aafb5051.css.map": "/EzDashboard/static/css/main.aafb5051.css.map",
+    "main.c3b6f30f.js.map": "/EzDashboard/static/js/main.c3b6f30f.js.map",
+    "453.7192f365.chunk.js.map": "/EzDashboard/static/js/453.7192f365.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.aafb5051.css",
+    "static/js/main.c3b6f30f.js"
+  ]
+}
