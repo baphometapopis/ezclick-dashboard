@@ -892,33 +892,20 @@ const [InspectedImages, setInspectedImages] = useState([]);
 
 
 
-const downloadImagesAsZip = async (data) => {
-  const zip = new JSZip();
 
-  // Filter the items with valid inspection images
-  const validImages = InspectedImages.filter(item => item.Inspection_Image !== 'no_image.jpg');
+  const  downloadImagesAsZip = () => {
+      const imageUrl = 'https://demo.ezclicktech.com/https://demo.ezclicktech.com/Ezclick/public/uploads/break-in-case/1/5281716276335.jpeg';
+      fetch(imageUrl)
+        .then(response => response.blob())
+        .then(blob => {
+          saveAs(blob, 'image.jpeg');
+        })
+        .catch(error => {
+          console.error('Error downloading image:', error);
+        });
+    };
+  
 
-  const downloadImage = async (url) => {
-    const response = await fetch(url);
-    const blob = await response.blob();
-    return blob;
-  };
-
-  for (const item of validImages) {
-    const imageBlob = await downloadImage(item.Inspection_Image);
-    const imageName = item.Inspection_Image.split('/').pop();
-    zip.file(imageName, imageBlob);
-  }
-
-  // Generate the zip file
-  zip.generateAsync({ type: 'blob' })
-    .then((content) => {
-      saveAs(content, 'inspection_images.zip');
-    })
-    .catch((error) => {
-      console.error('Error generating zip file:', error);
-    });
-};
 
 const handleSubmit = () => {
 
