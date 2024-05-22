@@ -44,9 +44,9 @@ const CustomTabs = ({ tabs }) => {
 function ImagePreviewModal({ imageUrl, onClose }) {
     return (
       <div style={{height:'80%', width:'80%', backgroundColor:'white',position:'absolute',padding:"20px",boxShadow:'rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px',overflow:'scroll'}} className="modal" onClick={onClose}>
-        <div className="modal-content">
+        <div className="modal-content1">
           <span className="close" onClick={onClose}>&times;</span>
-          <img  style={{width:'100%',height:'fit-content'}} src={imageUrl} alt="Preview" />
+          <img  style={{width:'100%',height:'100%',maxWidth:'920px'}} src={imageUrl} alt="Preview" />
         </div>
       </div>
     );
@@ -1093,8 +1093,9 @@ const data ={proposal_id:ldata?.state?.data?.id,
       
     setReportData(reportRes);
 
-      console.log(reportRes?.breakin_details,'<><><><><><><><><><><><><><><><><><><><><><>')
       const resData = mapData(referenceData,imageInspection,reportRes?.breakin_details)
+      console.log(resData,'<><><><><><><><><><><><><><><><><><><><><><>')
+
 
       setInspectedImages(resData)
 
@@ -1317,10 +1318,10 @@ const updatedImageStyles = imageStyles.map(style => {
   </table>
 <div className='page-break'>
   <h2 >Inspection Image Reports</h2>
-  {console.log(InspectedImages)}
+  {console.log(InspectedImages,'QWEQWEWQEQWEWQ')}
   <div className="inspection-data-container">
     {InspectedImages.map((item, index) => (
-      index % 2 === 0 && (
+      (
         <div key={index} className="inspection-data-row">
           <div className="inspection-item">
           {item.Inspection_Image!=='no_image.jpg' ? (
@@ -1349,6 +1350,16 @@ const updatedImageStyles = imageStyles.map(style => {
     ))}
     
   </div>
+  <h2 >Inspection Video</h2>
+
+  <div style={{display:'flex',justifyContent:'center'}}>
+
+  <video style={{ width: '70%', height: '80%',padding:'10px' ,   boxShadow:'0 0 5px rgba(0, 0, 0, 0.1)'/* Add shadow for depth */
+}} controls>
+          <source src={'https://demo.ezclicktech.com/Ezclick/public/uploads/break-in-case/1/video.webm'} type="video/webm" />
+        </video>
+
+        </div>
   
   </div>
   <div className="button-container">
