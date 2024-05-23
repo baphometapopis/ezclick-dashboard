@@ -101,7 +101,7 @@ const [windowWidth, setWindowWidth] = useState([window.innerWidth]);
     }
     const GetProposalList = useCallback(() => {
       const decryptdata=''
-      const data = fetchDataLocalStorage('claim_login');
+      const data = fetchDataLocalStorage('claim_loginDashboard');
    
 
     

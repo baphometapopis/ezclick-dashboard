@@ -6,12 +6,12 @@ export const submitForm=async(data,user_id)=>{
         var myHeaders = new Headers();
         var formdata = new FormData();
         formdata.append("proposal_no", data?.proposal_no);
-        formdata.append("proposal_id", data?.id);
+        // formdata.append("proposal_id", data?.id);
 
         formdata.append("insured_name", data?.insured_name);
         formdata.append("proposal_start_date", data?.proposal_start_date);
         formdata.append("proposal_end_date", data?.proposal_end_date);
-        formdata.append("mobile_no", data?.dmobile_noata);
+        formdata.append("mobile_no", data?.mobile_no);
         formdata.append("email", data?.email);
         formdata.append("nominee_name", data?.nominee_name);
         formdata.append("insured_address", data?.insured_address);
@@ -52,6 +52,59 @@ export const submitForm=async(data,user_id)=>{
     
         const response = await fetch(
           `${API_BASE_URL}create_proposal_details`,
+          requestOptions
+        );
+        const result = await response.text();
+    
+        return JSON.parse(result);
+      } catch (error) {
+        // Handle errors
+        console.log(error);
+      }
+
+}
+
+
+export const UpdateAdminStatus=async(data)=>{
+  console.log(data)
+    try {
+
+  
+        var myHeaders = new Headers();
+        var formdata = new FormData();
+        formdata.append("user_id", data?.user_id);
+        // formdata.append("proposal_id", data?.id);
+
+        formdata.append("proposal_id", data?.proposal_id);
+        formdata.append("breakin_status_id", data?.breakin_status_id);
+
+        formdata.append("comment", data?.comment);
+        formdata.append("is_referback_checkpoint", data?.is_referback_checkpoint);
+        formdata.append("is_referback_images", data?.is_referback_images);
+        formdata.append("is_referback_video", data?.is_referback_video);
+        formdata.append("image_ids",  `[${data?.image_ids}]`);
+
+       
+
+
+
+
+
+
+
+
+        
+    
+    
+        var requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body:formdata,
+          redirect: "follow",
+        };
+    
+        const response = await fetch(
+          `${API_BASE_URL}update_admin_status`,
           requestOptions
         );
         const result = await response.text();

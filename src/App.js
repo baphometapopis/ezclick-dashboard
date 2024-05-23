@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     // Check if token is present in local storage
-    const token =fetchDataLocalStorage('claim_login');
+    const token =fetchDataLocalStorage('claim_loginDashboard');
     if (token) {
       setIsLoggedIn(true);
 

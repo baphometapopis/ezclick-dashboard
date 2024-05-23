@@ -34,7 +34,7 @@ const Login = () => {
      const res = await  loginApi(formData.email,formData.password)
 
      if(res?.status){
-      storeDataLocalStorage('claim_login',res)
+      storeDataLocalStorage('claim_loginDashboard',res)
       toast.success(res?.message, {
         position: "bottom-right",
         autoClose: 3000,

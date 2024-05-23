@@ -31,6 +31,7 @@ const HomePage = () => {
 
    if(selectedExcel){ const res= await fileUpload(selectedExcel)
     if (res?.status) {
+
       toast.success(res?.message, {
         position: "bottom-right",
         autoClose: 3000,
@@ -39,7 +40,8 @@ const HomePage = () => {
         closeOnClick: true,
         pauseOnHover: true,
       });
-    } else if (res?.message ==='Partially Uploaded Proposal') {  // Assuming res?.info is a condition you want to check for info messages
+    } else if (res?.message ==='Partially Uploaded Proposal') {
+        // Assuming res?.info is a condition you want to check for info messages
       toast.info('Partially Uploaded Proposal', {
         position: "bottom-right",
         autoClose: 3000,
@@ -59,6 +61,8 @@ const HomePage = () => {
         pauseOnHover: true,
       });
     }
+    getUploadedExcelList()
+
     
   
   }

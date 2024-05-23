@@ -14,6 +14,7 @@ import CustomDatePicker from '../../Component/UI/CustomDatePicker';
 import { submitForm } from '../../Api/SubmitForm';
 import { fetchDataLocalStorage } from '../../Util/LocalStorage';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { ConsoleView } from 'react-device-detect';
 
 
 const ProposalCard = ({ proposalNo, insuredName, registrationNo ,data,selectedProposal}) => {
@@ -199,7 +200,7 @@ const getDropDownMaster=async()=>{
 }
 const  getLocalData=()=>{
 
-  const getLocalData= fetchDataLocalStorage('claim_login')
+  const getLocalData= fetchDataLocalStorage('claim_loginDashboard')
   console.log('fetched local datat form localk ',getLocalData?.data)
 
   setLoginData(getLocalData?.data)
@@ -248,11 +249,11 @@ const setSelectedProposalData=async(data)=>{
 
 
   
-    if(field&&selectedValue)
+    if(field&&String(selectedValue))
     {
     setFormData(prevFormData => ({
       ...prevFormData,
-      [field]: selectedValue
+      [field]: String(selectedValue)
     }));
 
     setFormErrors({
@@ -379,6 +380,8 @@ const   handleSearchSubmit =async()=>{
 
 }
 const handleSubmit = async () => {
+  console.log(formData)
+
   let hasError = false;
   const updatedFormErrors = { ...formErrors };
 
@@ -403,7 +406,6 @@ const handleSubmit = async () => {
   // Update formErrors state
   setFormErrors(updatedFormErrors);
 
-  console.log(updatedFormErrors)
   // If there's an error, prevent form submission
   if (hasError) {
     return;
@@ -543,7 +545,7 @@ useEffect(()=>{
         required={true}
         value={formData.insured_name}
         onChange={(e)=>handleChange(e,'insured_name')}
-        placeholder="Enter mobile number"
+        placeholder="Enter Insured Name"
         error={formErrors.insured_name}
       />
       <TextInput
@@ -771,19 +773,10 @@ useEffect(()=>{
         placeholder="Enter vehicle type of body"
         error={formErrors.v_type_of_body}
       /> */}
-      <TextInput
-        label="Vehicle Nil Depreciation"
-        name="v_nill_depreciation"
-        required={true}
-        onChange={(e)=>handleChange(e,'v_nill_depreciation')}
-
-        value={formData.v_nill_depreciation}
-        placeholder="Enter vehicle nil depreciation"
-        error={formErrors.v_nill_depreciation}
-      />
+   
 
 <Dropdown
-        label="Vehicle Anti-theft Status"
+        label="Vehicle Nil Depreciation"
         required={true}
         value={formData.v_nill_depreciation}
         onChange={(event) => handleDropdownChange(event, 'v_nill_depreciation')}

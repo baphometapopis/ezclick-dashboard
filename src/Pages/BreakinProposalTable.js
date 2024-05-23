@@ -35,7 +35,7 @@ const getVariable = (status) => {
       case 0:
         return 'Pending';
       case 1:
-        return 'InProgress';
+        return 'Inspection Submitted';
 
       case 2:
         return 'Rejected';
@@ -177,23 +177,14 @@ const getVariable = (status) => {
       width: 230,
       renderCell: (params) => (
     
-        <div>
-      <button  onClick={()=>handleViewReports(params)}  className="upload-button">View Reports </button>
+        <div >
+          {console.log(params?.row)}
+    {params?.row?.breakin_status!==0&& <div  onClick={()=>handleViewReports(params)}  style={{backgroundColor:"#007bff",width:'fit-content',padding:'5px',borderRadius:'6px',color:'white'}} >View Reports </div>}
         </div>
       ), // Pass policy_no or id to PolicyCard
     },
   ];
-   // {
-    //     field: "updated_at",
-    //     headerName: "updated Date",
-    //     width: 180,
-    //     headerClassName: "super-app-theme--header",
-  
-    //     valueFormatter: (params) => {
-    //       const formattedDate = moment(params.value).format("DD-MM-YYYY");
-    //       return formattedDate;
-    //     },
-    //   },
+   
 
   const StyledGridOverlay = styled("div")(({ theme }) => ({
     display: "flex",
@@ -293,6 +284,7 @@ const getVariable = (status) => {
         sx={{
           border: "none",
           [`& .super-app-theme--header`]: {
+            
             backgroundColor: "#2B2D42",
             color: "white",
           },

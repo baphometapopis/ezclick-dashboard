@@ -9,6 +9,10 @@ import { HeaderLogo } from '../../Constant/ImageConstant';
 import { fetchDataLocalStorage, storeDataLocalStorage } from '../../Util/LocalStorage';
 import './ViewReport.css'; // Importing CSS file for additional styles
 import { saveAs } from 'file-saver'
+import { gridColumnGroupsLookupSelector } from '@mui/x-data-grid';
+import { UpdateAdminStatus } from '../../Api/SubmitForm';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CustomTabs = ({ tabs }) => {
     const navigate = useNavigate();
@@ -57,15 +61,15 @@ const ViewReportPage = () => {
 
     const updatestatuslist=[
         {
-          "id": 'Accept',
+          "id": 4,
           "label": "Accept"
       },
       {
-          "id": 'Reject',
+          "id": 2,
           "label": "Reject"
       },
       {
-          "id": 'ReferBack',
+          "id": 3,
           "label": "ReferBack"
       },
     ]
@@ -879,6 +883,7 @@ const imageStyles = [
 
 
 
+const [LocalData,setLocalData]=useState('')
 
 const [adminComment, setadminComment] = useState('');
 const [status, setStatus] = useState('');
@@ -894,7 +899,7 @@ const [InspectedImages, setInspectedImages] = useState([]);
 
 
   const  downloadImagesAsZip = () => {
-      const imageUrl = 'https://demo.ezclicktech.com/https://demo.ezclicktech.com/Ezclick/public/uploads/break-in-case/1/5281716276335.jpeg';
+      const imageUrl = 'https://demo.ezclicktech.com/Ezclick/public/uploads/break-in-case/1/5281716276335.jpeg';
       fetch(imageUrl)
         .then(response => response.blob())
         .then(blob => {
@@ -906,8 +911,44 @@ const [InspectedImages, setInspectedImages] = useState([]);
     };
   
 
+   
+const handleSubmit = async () => {
 
-const handleSubmit = () => {
+  const result = {
+    is_referback_checkpoint: 0,
+    is_referback_images: 0,
+    is_referback_video: 0,
+  };
+
+  
+  
+  console.log('Statussssss',status)
+if(status==3){
+  selectedReferbackOption.forEach((item) => {
+    if (item === 'checkpoint') {
+      result.is_referback_checkpoint = 1;
+    } else if (item === 'imageInspection') {
+      result.is_referback_images = 1;
+    } else if (item === 'video') {
+      result.is_referback_video = 1;
+    }
+  });
+}
+
+console.log(selectedImagesReferback)
+const valuesArray = selectedImagesReferback.map(item => item.value);
+console.log(valuesArray)
+
+
+const data ={proposal_id:reportData?.proposal_detail?.id,
+  user_id:LocalData?.data?.user_details?.id,
+  breakin_status_id:status,
+  is_referback_checkpoint:result?.is_referback_checkpoint,
+is_referback_images:result?.is_referback_images,
+is_referback_video:result?.is_referback_video,
+  image_ids:valuesArray,
+  comment:adminComment,
+}
 
 
   if (adminComment.trim() === '' || status === '') {
@@ -915,12 +956,40 @@ const handleSubmit = () => {
     return;
   }
 
-  if(status==='ReferBack'&&selectedReferbackOption.length===0)
+  if(status===3&&selectedReferbackOption.length===0)
   {
-  setIsReferBackModelOpen(true);}
+  setIsReferBackModelOpen(true);
+return null
+}
 
 
-  console.log(selectedImagesReferback,selectedReferbackOption,status)
+  const updateStatus= await UpdateAdminStatus(data)
+
+
+
+
+  if(updateStatus?.status){
+    toast.success(updateStatus?.message, {
+      position: "bottom-right",
+      autoClose: 3000,
+      theme:'colored',
+
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+    });
+  }else{
+
+    toast.error(updateStatus?.message, {
+      position: "bottom-right",
+      autoClose: 3000,
+      theme:'colored',
+
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+    });
+  }
   
 
 }
@@ -931,6 +1000,7 @@ const handleChangeText = (event) => {
 };
 
 const handleChangeStatus = (event) => {
+  console.log(event.target.value)
   setStatus(event.target.value);
   setError('');
 };
@@ -939,7 +1009,6 @@ const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
 const [selectedImage, setSelectedImage] = useState('');
 
 const openModal = (uri) => {
-    console.log(uri,'isClicked>>>>>>>>>>>>')
     setIsPreviewModalOpen(true)
     setSelectedImage(uri)
 };
@@ -1025,16 +1094,13 @@ const openModal = (uri) => {
     printWindow.document.write('</body></html>');
 };
 function mapData(refData, namesData, codesData) {
-  console.log(refData, namesData, codesData);
   let mappedArray = [];
   
   refData.forEach(nameItem => {
-    console.log(nameItem)
 
     const codeItem = codesData[nameItem.code]; // Access property directly
     const refItem = namesData.find(item => item.name === nameItem.name);
 
-    console.log(codeItem,refItem)
       
     if (codeItem && refItem) {
       const mappedItem = {
@@ -1045,7 +1111,6 @@ function mapData(refData, namesData, codesData) {
         "Inspection_Image": codeItem // Access property directly
       };
       mappedArray.push(mappedItem);
-      console.log(mappedArray)
     }
   });
   
@@ -1081,20 +1146,23 @@ const referenceData = [
 
 
 const handleReportData=async()=>{
-  const localres=await fetchDataLocalStorage('Claim_loginDetails',)
+  const localres=await fetchDataLocalStorage('claim_loginDashboard',)
+  console.log('Report Res>>>>>>>>>>>>>>>>>>>',localres)
   
 const data ={proposal_id:ldata?.state?.data?.id,
   user_id:localres?.data?.user_details?.id,
-  break_in_case_id:ldata?.state?.data?.id}
+  break_in_case_id:ldata?.state?.data?.breakin_inspection_id}
 
-    if(ldata){
+    if(localres){
+
       const reportRes = await getFullReport(data)
+
+      setLocalData(localres)
 
       
     setReportData(reportRes);
 
       const resData = mapData(referenceData,imageInspection,reportRes?.breakin_details)
-      console.log(resData,'<><><><><><><><><><><><><><><><><><><><><><>')
 
 
       setInspectedImages(resData)
@@ -1142,7 +1210,7 @@ const updatedImageStyles = imageStyles.map(style => {
   },[])
 
 
-  useEffect(()=>{},[isPreviewModalOpen,selectedImage,InspectedImages])
+  useEffect(()=>{},[isPreviewModalOpen,selectedImage,InspectedImages,LocalData])
   
 
   return (
@@ -1201,12 +1269,12 @@ const updatedImageStyles = imageStyles.map(style => {
             </tr>
             <tr>
               <td><strong>Model:</strong></td>
-              <td>{reportData?.proposal_detail?.v_model_id}</td>
+              <td>{reportData?.proposal_detail?.model_name}</td>
               <td><strong>Make:</strong></td>
-              <td>{reportData?.proposal_detail?.v_make_id}</td>
+              <td>{reportData?.proposal_detail?.make_name}</td>
             </tr> <tr>
               <td><strong>Variant:</strong></td>
-              <td>{reportData?.proposal_detail?.v_variant_id}</td>
+              <td>{reportData?.proposal_detail?.variant_name}</td>
               <td><strong>CC:</strong></td>
               <td>{reportData?.proposal_detail?.v_cc}</td>
             </tr>
@@ -1218,15 +1286,20 @@ const updatedImageStyles = imageStyles.map(style => {
             </tr>
             <tr>
               <td><strong> Product:</strong></td>
-              <td>{reportData?.proposal_detail?.v_product_type_id}</td>
+              <td>{reportData?.proposal_detail?.product_type_name}</td>
               <td><strong>Manufacture year:</strong></td>
               <td>{reportData?.proposal_detail?.v_manufacture_year}</td>
             </tr>
             <tr>
               <td><strong> Fuel Type:</strong></td>
-              <td>{reportData?.proposal_detail?.v_fuel_type_id}</td>
+              <td>{reportData?.proposal_detail?.fuel_type_name}</td>
               <td><strong>Color:</strong></td>
               <td>{reportData?.proposal_detail?.v_color}</td>
+            </tr>
+            <tr>
+              <td><strong> Odometer Reading:</strong></td>
+              <td>{reportData?.breakin_details?.odometer_reading}</td>
+             
             </tr>
           </tbody>
         </table>
@@ -1277,11 +1350,11 @@ const updatedImageStyles = imageStyles.map(style => {
         style.srcs ? (
           <div key={index} style={{ position: 'absolute', top: style.top, left: style.left, bottom: style.bottom }}>
             {style.srcs.map((innerStyle, innerIndex) => (
-              <img key={innerIndex} src={innerStyle.src} style={{ position: 'absolute', top: innerStyle.top, left: innerStyle.left, bottom: innerStyle.bottom }} />
+              <img key={innerIndex} src={innerStyle.src}  alt='sample' style={{ position: 'absolute', top: innerStyle.top, left: innerStyle.left, bottom: innerStyle.bottom }} />
             ))}
           </div>
         ) : (
-          <img key={index} src={style.src} style={{ position: 'absolute', top: style.top, left: style.left, bottom: style.bottom }} />
+          <img key={index} src={style.src} alt='sample' style={{ position: 'absolute', top: style.top, left: style.left, bottom: style.bottom }} />
         )
       ))}
     </div>
@@ -1318,7 +1391,6 @@ const updatedImageStyles = imageStyles.map(style => {
   </table>
 <div className='page-break'>
   <h2 >Inspection Image Reports</h2>
-  {console.log(InspectedImages,'QWEQWEWQEQWEWQ')}
   <div className="inspection-data-container">
     {InspectedImages.map((item, index) => (
       (
@@ -1354,10 +1426,10 @@ const updatedImageStyles = imageStyles.map(style => {
 
   <div style={{display:'flex',justifyContent:'center'}}>
 
-  <video style={{ width: '70%', height: '80%',padding:'10px' ,   boxShadow:'0 0 5px rgba(0, 0, 0, 0.1)'/* Add shadow for depth */
+ {reportData?.breakin_details?.video ? <video style={{ width: '70%', height: '80%',padding:'10px' ,   boxShadow:'0 0 5px rgba(0, 0, 0, 0.1)'/* Add shadow for depth */
 }} controls>
-          <source src={'https://demo.ezclicktech.com/Ezclick/public/uploads/break-in-case/1/video.webm'} type="video/webm" />
-        </video>
+          <source src={`${reportData?.breakin_details?.video}`} type="video/webm" />
+        </video>:<h2>No Video has been Uploaded</h2>}
 
         </div>
   
@@ -1385,8 +1457,7 @@ const updatedImageStyles = imageStyles.map(style => {
         <h2>Update Status</h2>
 {error&& <p style={{color:'red'}}>{error }</p>}
         <Dropdown
-          // label="Vehicle Fuel Type"
-          // required={true}
+        
           value={status}
 
           onChange={handleChangeStatus}
@@ -1453,12 +1524,12 @@ const updatedImageStyles = imageStyles.map(style => {
             </tr>
             <tr>
               <td><strong>Model:</strong></td>
-              <td>{reportData?.proposal_detail?.v_model_id}</td>
+              <td>{reportData?.proposal_detail?.model_name}</td>
               <td><strong>Make:</strong></td>
-              <td>{reportData?.proposal_detail?.v_make_id}</td>
+              <td>{reportData?.proposal_detail?.make_name}</td>
             </tr> <tr>
               <td><strong>Variant:</strong></td>
-              <td>{reportData?.proposal_detail?.v_variant_id}</td>
+              <td>{reportData?.proposal_detail?.variant_name}</td>
               <td><strong>CC:</strong></td>
               <td>{reportData?.proposal_detail?.v_cc}</td>
             </tr>
@@ -1470,13 +1541,13 @@ const updatedImageStyles = imageStyles.map(style => {
             </tr>
             <tr>
               <td><strong> Product:</strong></td>
-              <td>{reportData?.proposal_detail?.v_product_type_id}</td>
+              <td>{reportData?.proposal_detail?.product_type_name}</td>
               <td><strong>Manufacture year:</strong></td>
               <td>{reportData?.proposal_detail?.v_manufacture_year}</td>
             </tr>
             <tr>
               <td><strong> Fuel Type:</strong></td>
-              <td>{reportData?.proposal_detail?.v_fuel_type_id}</td>
+              <td>{reportData?.proposal_detail?.fuel_type_name}</td>
               <td><strong>Color:</strong></td>
               <td>{reportData?.proposal_detail?.v_color}</td>
             </tr>
@@ -1545,19 +1616,21 @@ const updatedImageStyles = imageStyles.map(style => {
         <th>Label</th>
       </tr>
     </thead>
+
     <tbody>
+      
       {inspection.map((item, index) => (
         index % 2 === 0 && (
           <tr key={index}>
             <td><strong>{item.question}:</strong></td>
             {/* <td>{item.label}</td> */}
-            <td> {reportData?.qsn_ans?.color[inspection[index + 1].breakin_inspection_post_question_id]??'Not Submitted'}</td>
+            <td> {reportData?.qsn_ans?.question_ans[inspection[index + 1].breakin_inspection_post_question_id]??'Not Submitted'}</td>
 
             {inspection[index + 1] && (
               <React.Fragment>
                 <td><strong>{inspection[index + 1].question}:</strong></td>
                 {/* <td>{inspection[index + 1].label}</td> */}
-                <td> {reportData?.qsn_ans?.color[inspection[index + 1].breakin_inspection_post_question_id]??'Not Submitted'}</td>
+                <td> {reportData?.qsn_ans?.question_ans[inspection[index + 1].breakin_inspection_post_question_id]??'Not Submitted'}</td>
 
               </React.Fragment>
             )}

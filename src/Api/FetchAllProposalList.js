@@ -35,3 +35,5 @@ export const getAllProposalListApi = async (data) => {
     console.log(error);
   }
 };
+
+
