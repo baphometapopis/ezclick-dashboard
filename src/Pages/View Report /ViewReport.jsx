@@ -922,7 +922,6 @@ const handleSubmit = async () => {
 
   
   
-  console.log('Statussssss',status)
 if(status==3){
   selectedReferbackOption.forEach((item) => {
     if (item === 'checkpoint') {
@@ -991,6 +990,8 @@ return null
     });
   }
   
+  setadminComment('')
+  setStatus(null)
 
 }
 

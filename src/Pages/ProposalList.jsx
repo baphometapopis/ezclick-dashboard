@@ -121,6 +121,7 @@ const [windowWidth, setWindowWidth] = useState([window.innerWidth]);
           .then((data) => {
             console.log(data?.data)
             setPolicyList(data?.data);
+            setTotalRecords(data?.total_count)
             const pagination = calculatePagination(
               totalRecords,
               recordsPerPage,
@@ -350,7 +351,7 @@ useEffect(()=>{},[filterValue])
               </span>
               <div style={{display:'flex',gap:'10px',alignItems:'center'}}>
               <span style={{color:'black'}}>
-                  Page {currentPage} of {totalPage??1}
+                  Page {currentPage} of {totalPage}
                 </span>
   
                 <button

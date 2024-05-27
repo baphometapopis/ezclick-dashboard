@@ -33,7 +33,7 @@ const SuccessPage = ({ proposalInfo }) => {
       {/* Links to Open Link URL and Playstore */}
       <div className="links">
         <div className="link-container">
-          <a href={`https://breakin-pwa.netlify.app/proposal-info/${proposalNo.proposal_no}`}>Open Link URL</a>
+          <a href={`https://ezclick-pwa.netlify.app/proposal-info/${proposalNo.proposal_no}`}>Open Link URL</a>
         </div>
         <div className="link-container">
           <a href="https://play.google.com/store/apps/details?id=com.example.app">Playstore</a>
@@ -43,7 +43,7 @@ const SuccessPage = ({ proposalInfo }) => {
       {/* QR Code for Open Link URL and Playstore */}
       <div className="qr-codes">
         <div className="qr-code-container">
-          <QRCode value={`https://breakin-pwa.netlify.app/proposal-info/${proposalNo.proposal_no}`} />
+          <QRCode value={`https://ezclick-pwa.netlify.app/proposal-info/${proposalNo.proposal_no}`} />
         </div>
         <div className="qr-code-container">
           <QRCode value="https://play.google.com/store/apps/details?id=com.example.app" />

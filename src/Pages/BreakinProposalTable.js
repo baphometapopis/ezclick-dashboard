@@ -27,6 +27,13 @@ const BreakinProposalTable = ({ data, refresh }) => {
 
 
   }
+const handleViewSuccesspage=(params)=>{
+  navigate('/SuccessPage',{state:params?.row})
+
+
+}
+
+
 
 //   breakin_status  -> 0 : pending, 1: inprogress , 2: rejected , 3: referback, 4: completed, 
 
@@ -68,7 +75,7 @@ const getVariable = (status) => {
         };
       case 1:
         return {
-          backgroundColor: "#68D391",
+          backgroundColor: "#00FFFF",
           color: "#ffffff",
           padding:'3px',
           borderRadius:'8px'
@@ -84,7 +91,7 @@ const getVariable = (status) => {
         };
         case 3:
             return {
-              backgroundColor: "#dc143c",
+              backgroundColor: "#FFA500",
               color: "#ffffff",
               padding:'3px',
               borderRadius:'8px'
@@ -92,7 +99,7 @@ const getVariable = (status) => {
             };
             case 4:
                 return {
-                  backgroundColor: "#dc143c",
+                  backgroundColor: "#00A36C",
                   color: "#ffffff",
                   padding:'3px',
                   borderRadius:'8px'
@@ -176,10 +183,10 @@ const getVariable = (status) => {
 
       width: 230,
       renderCell: (params) => (
-    
-        <div >
-          {console.log(params?.row)}
-    {params?.row?.breakin_status!==0&& <div  onClick={()=>handleViewReports(params)}  style={{backgroundColor:"#007bff",width:'fit-content',padding:'5px',borderRadius:'6px',color:'white'}} >View Reports </div>}
+        <div  style={{display:'flex',gap:'5px'}}>
+    {params?.row?.breakin_status!==0&& <div  onClick={()=>handleViewReports(params)}  style={{backgroundColor:"#007bff",width:'fit-content',padding:'5px',borderRadius:'6px',color:'white',cursor:'pointer'}} >View Reports </div>}
+   <div  onClick={()=>handleViewSuccesspage(params)}  style={{backgroundColor:"green",width:'fit-content',padding:'5px',borderRadius:'6px',color:'white',cursor:'pointer'}} >link </div>
+
         </div>
       ), // Pass policy_no or id to PolicyCard
     },
