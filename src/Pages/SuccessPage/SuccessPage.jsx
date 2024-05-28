@@ -36,7 +36,7 @@ const SuccessPage = ({ proposalInfo }) => {
           <a href={`https://ezclick-pwa.netlify.app/proposal-info/${proposalNo.proposal_no}`}>Open Link URL</a>
         </div>
         <div className="link-container">
-          <a href="https://play.google.com/store/apps/details?id=com.example.app">Playstore</a>
+          <a href="https://drive.google.com/drive/folders/1Zhb7bEPnyoPXCjvypn2hRb5vASZNlCr5?usp=drive_link">Playstore</a>
         </div>
       </div>
 
@@ -46,7 +46,7 @@ const SuccessPage = ({ proposalInfo }) => {
           <QRCode value={`https://ezclick-pwa.netlify.app/proposal-info/${proposalNo.proposal_no}`} />
         </div>
         <div className="qr-code-container">
-          <QRCode value="https://play.google.com/store/apps/details?id=com.example.app" />
+          <QRCode value="https://drive.google.com/drive/folders/1Zhb7bEPnyoPXCjvypn2hRb5vASZNlCr5?usp=drive_link" />
         </div>
       </div>
       <p className="email-message">{`An SMS/Email has been triggered to ${proposalNo?.mobile_no}/${proposalNo?.email}`}</p>

@@ -1047,8 +1047,8 @@ const openModal = (uri) => {
         .data-table { width: 100%; border-collapse: collapse; }
         .page-break{ page-break-before: always; }
         .inspection-item { 
-            height: fit-content;
-            width: 500px;
+            height: 400px;
+            width: 400px;
             padding: 20px;
             margin-right: 20px;
             margin-bottom: 20px;
@@ -1058,7 +1058,7 @@ const openModal = (uri) => {
         .data-table th, .data-table td { border: 1px solid #000; padding: 8px; }
         .inspection-data-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
         .inspection-data-table th, .inspection-data-table td { border: 1px solid #000; padding: 8px; }
-        .inspection-image { width: 100%; }
+        .inspection-image { width: 100%; height:400px }
         .button-container { text-align: center; margin-top: 20px; }
         .download-button, .preview-button, .print-button { padding: 10px 20px; font-size: 16px; display: none; }
     `);
@@ -1404,7 +1404,7 @@ const updatedImageStyles = imageStyles.map(style => {
             ):<h4 className='inspection-name'>Image not uploaded</h4>}
             <div className="inspection-name">{item.name}</div>
           {item.Inspection_Image &&  <div className="button-container">
-              <button className="download-button" >Download</button>
+              {/* <button className="download-button" >Download</button> */}
               <button onClick={()=>openModal(item.Inspection_Image)} className="preview-button" >Preview</button>
 
             </div>}
@@ -1435,9 +1435,9 @@ const updatedImageStyles = imageStyles.map(style => {
         </div>
   
   </div>
-  <div className="button-container">
+  {/* <div className="button-container">
               <button onClick={downloadImagesAsZip} className="download-button" >Download All Images</button>
-            </div>
+            </div> */}
 
   
 

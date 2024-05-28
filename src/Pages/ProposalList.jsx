@@ -123,7 +123,7 @@ const [windowWidth, setWindowWidth] = useState([window.innerWidth]);
             setPolicyList(data?.data);
             setTotalRecords(data?.total_count)
             const pagination = calculatePagination(
-              totalRecords,
+              data?.total_count,
               recordsPerPage,
               0
             );
