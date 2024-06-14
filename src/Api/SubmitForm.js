@@ -13,6 +13,8 @@ export const submitForm=async(data,user_id)=>{
         formdata.append("proposal_end_date", data?.proposal_end_date);
         formdata.append("mobile_no", data?.mobile_no);
         formdata.append("email", data?.email);
+        formdata.append("additional_email", data?.additional_email);
+
         formdata.append("nominee_name", data?.nominee_name);
         formdata.append("insured_address", data?.insured_address);
         // formdata.append("hypothecation_lease", data?.hypothecation_lease);
@@ -105,6 +107,38 @@ export const UpdateAdminStatus=async(data)=>{
     
         const response = await fetch(
           `${API_BASE_URL}update_admin_status`,
+          requestOptions
+        );
+        const result = await response.text();
+    
+        return JSON.parse(result);
+      } catch (error) {
+        // Handle errors
+        console.log(error);
+      }
+
+}
+
+export const updateAlternateEmail=async(data)=>{
+  console.log(data)
+    try {
+
+  
+        var myHeaders = new Headers();
+        var formdata = new FormData();
+        formdata.append("al_email_id", data?.al_email_id);
+
+        formdata.append("proposal_id", data?.proposal_id);
+       
+        var requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body:formdata,
+          redirect: "follow",
+        };
+    
+        const response = await fetch(
+          `${API_BASE_URL}updateAlEmail`,
           requestOptions
         );
         const result = await response.text();

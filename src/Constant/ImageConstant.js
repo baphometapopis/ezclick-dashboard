@@ -12,7 +12,13 @@ import Search from '../Assets/Images/search.png'
 import Success from '../Assets/Images/success.png'
 
 import Logout from '../Assets/Icons/logout.png'
+import Link from '../Assets/Icons/link.png'
+import Viewreport from '../Assets/Icons/viewreport.png'
 
 
 
-export {Logo,Menu,Dashboard,AddInspection,ListInspection,Search,HeaderLogo,Logout,Placeholder,Success}
+
+
+
+
+export {Viewreport,Link,Logo,Menu,Dashboard,AddInspection,ListInspection,Search,HeaderLogo,Logout,Placeholder,Success}

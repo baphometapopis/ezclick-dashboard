@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { getFullReport } from '../../Api/getProposalDetails';
 import { ReferBackModal } from '../../Component/ReferBackModal';
 import Dropdown from '../../Component/UI/Dropdown';
-import { HeaderLogo } from '../../Constant/ImageConstant';
+import { HeaderLogo,Logo } from '../../Constant/ImageConstant';
 import { fetchDataLocalStorage, storeDataLocalStorage } from '../../Util/LocalStorage';
 import './ViewReport.css'; // Importing CSS file for additional styles
 import { saveAs } from 'file-saver'
@@ -13,6 +13,8 @@ import { gridColumnGroupsLookupSelector } from '@mui/x-data-grid';
 import { UpdateAdminStatus } from '../../Api/SubmitForm';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import InspectionReportPdf from '../../Component/InspectionReportPdf';
 
 const CustomTabs = ({ tabs }) => {
     const navigate = useNavigate();
@@ -881,24 +883,32 @@ const imageStyles = [
   { top: '247px', left: '8%', src: 'https://demo.mypolicynow.com/api//images/revised-car-grey/40.png' }
 ];
 
+const [isDecalarationChecked, setIsDecalarationChecked] = useState(false);
 
+const handleDeclarationCheckbox = (event) => {
+  setIsDecalarationChecked(event.target.checked);
+};
 
 const [LocalData,setLocalData]=useState('')
-
 const [adminComment, setadminComment] = useState('');
 const [status, setStatus] = useState('');
- const [error, setError] = useState('');
-
+const [error, setError] = useState('');
 const [isReferBackModelOpen, setIsReferBackModelOpen] = useState(false);
 const [selectedImagesReferback, setSelectedImagesReferback] = useState([]);
 const [selectedReferbackOption, setselectedReferbackOption] = useState([]);
 const [InspectedImages, setInspectedImages] = useState([]);
+const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
+const [selectedImage, setSelectedImage] = useState('');
+const navigate = useNavigate();
+const [activeTab, setActiveTab] = useState('');
+const ldata = useLocation()
+const [reportData,setReportData]=useState()
+    
 
 
 
 
-
-  const  downloadImagesAsZip = () => {
+const  downloadImagesAsZip = () => {
       const imageUrl = 'https://demo.ezclicktech.com/Ezclick/public/uploads/break-in-case/1/5281716276335.jpeg';
       fetch(imageUrl)
         .then(response => response.blob())
@@ -934,8 +944,7 @@ if(status==3){
   });
 }
 
-console.log(selectedImagesReferback)
-const valuesArray = selectedImagesReferback.map(item => item.value);
+const valuesArray = selectedImagesReferback?.map(item => item.value);
 console.log(valuesArray)
 
 
@@ -1006,8 +1015,6 @@ const handleChangeStatus = (event) => {
   setError('');
 };
 
-const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
-const [selectedImage, setSelectedImage] = useState('');
 
 const openModal = (uri) => {
     setIsPreviewModalOpen(true)
@@ -1018,12 +1025,6 @@ const openModal = (uri) => {
     setSelectedImage('')
 }
 
-    const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState('');
-
-    const ldata = useLocation()
-
-    const [reportData,setReportData]=useState()
     
   const data = ldata?.state?.data;
   const handleTabChange = (tab) => {
@@ -1031,69 +1032,104 @@ const openModal = (uri) => {
     navigate(`${ldata.pathname}#${tab}`);
   };
 
-  const handlePrint = () => {
-    const printContents = document.querySelector('.report-container').innerHTML;
-    const printWindow = window.open('', '', 'height=800,width=800');
 
-    printWindow.document.write('<html><head><title>Inspection Report</title>');
 
-    // Inline CSS styles or link to external stylesheet
-    printWindow.document.write('<style>');
-    printWindow.document.write(`
-        body { font-family: Arial, sans-serif; }
-        .header-logo { width: 100%; }
-        .report-title { font-size: 24px; font-weight: bold; text-align: center; margin-bottom: 20px; }
-        .report-section { margin-bottom: 20px; }
-        .data-table { width: 100%; border-collapse: collapse; }
-        .page-break{ page-break-before: always; }
-        .inspection-item { 
-            height: 400px;
-            width: 400px;
-            padding: 20px;
-            margin-right: 20px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .data-table th, .data-table td { border: 1px solid #000; padding: 8px; }
-        .inspection-data-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        .inspection-data-table th, .inspection-data-table td { border: 1px solid #000; padding: 8px; }
-        .inspection-image { width: 100%; height:400px }
-        .button-container { text-align: center; margin-top: 20px; }
-        .download-button, .preview-button, .print-button { padding: 10px 20px; font-size: 16px; display: none; }
-    `);
-    printWindow.document.write('</style>');
 
-    // Optionally link to external stylesheet
-    printWindow.document.write('<link rel="stylesheet" type="text/css" href="./ViewReport.css">');
 
-    printWindow.document.write('</head><body>');
 
-    // Write printContents to the print window
-    printWindow.document.write(printContents);
+const handlePrint = () => {
+if(!isDecalarationChecked){
 
-    // Wait for all images to load before printing
-    const images = printWindow.document.querySelectorAll('img');
-    let imagesLoaded = 0;
+  alert('Please Accept terms and Condition')
 
-    const checkAllImagesLoaded = () => {
-        imagesLoaded++;
-        if (imagesLoaded === images.length) {
-            printWindow.document.close();
-            printWindow.print();
-        }
-    };
+}
+ else{ const printContents = document.querySelector('.report-container').innerHTML;
+  const printWindow = window.open('Inspection Report', 'Inspection Report', 'height=800,width=800');
 
-    images.forEach(img => {
-        if (img.complete) {
-            checkAllImagesLoaded();
-        } else {
-            img.addEventListener('load', checkAllImagesLoaded);
-        }
-    });
+  printWindow.document.write('<html><head><title>Ezclick Vehicle Inspection Report</title>');
+  const footerLogo=Logo
 
-    printWindow.document.write('</body></html>');
+  // Inline CSS styles or link to external stylesheet
+  printWindow.document.write('<style>');
+  printWindow.document.write(`
+    body { font-family: Arial, sans-serif;  padding-bottom: 280px;
+    }
+   .header-logo { width: 100%; }
+   .report-title { font-size: 24px; font-weight: bold; text-align: center; margin-bottom: 20px; }
+   .report-section { margin-bottom: 20px; }
+   .data-table { width: 100%; border-collapse: collapse; }
+   .page-break{ page-break-before: always; }
+   .inspection-item { width: 300px; padding: 10px; margin: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+   .inspection-data-container { display: flex; flex-wrap: wrap; }
+   .data-table th,.data-table td { border: 1px solid #000; padding: 8px; }
+   .inspection-data-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+   .inspection-data-table th,.inspection-data-table td { border: 1px solid #000; padding: 8px; }
+   .inspection-image { width: 100%; height:400px }
+   .button-container { text-align: center; margin-top: 20px; }
+   .download-button,.preview-button,.print-button { padding: 10px 20px; font-size: 16px; display: none; }
+   .footer {
+      position: fixed;
+      bottom: -10px;
+      left: 0;  
+      width: 100%;
+      background-color: #f0f0f0;
+      padding: 10px;
+      text-align:center:
+      border-top: 1px solid #ccc;
+    }
+  `);
+  printWindow.document.write('</style>');
+
+  // Optionally link to external stylesheet
+  printWindow.document.write('<link rel="stylesheet" type="text/css" href="./ViewReport.css">');
+
+  printWindow.document.write('</head><body>');
+
+  // Write printContents to the print window
+  printWindow.document.write(printContents);
+
+  // Add footer
+  printWindow.document.write('<div class="footer">');
+  printWindow.document.write(`
+  <div style="width: 100%; position: fixed; bottom: 0; left: 0; padding: 0px; background-color: #f0f0f0; border-top: 1px solid #ccc; display: flex; align-items: center;">
+  <img src="${footerLogo}" alt="Logo" style="width: 100px; height: 80px; margin-right: 10px;">
+  <p style="margin: 0;     position: absolute;
+  bottom: 45px;
+  left: 500px;">Inspection Date: ${new Date().toLocaleDateString()}</p>
+</div>
+`);  
+  printWindow.document.write('</div>');
+
+  // Wait for all images to load before printing
+  const images = printWindow.document.querySelectorAll('img');
+  let imagesLoaded = 0;
+
+  const checkAllImagesLoaded = () => {
+    imagesLoaded++;
+    if (imagesLoaded === images.length) {
+      printWindow.document.close();
+      printWindow.print();
+    }
+  };
+
+  images.forEach(img => {
+    if (img.complete) {
+      checkAllImagesLoaded();
+    } else {
+      img.addEventListener('load', checkAllImagesLoaded);
+    }
+  });
+
+  printWindow.document.write('</body></html>');}
 };
+  
+
+  
+  
+  
+  
+  
+  
 function mapData(refData, namesData, codesData) {
   let mappedArray = [];
   
@@ -1218,7 +1254,7 @@ const updatedImageStyles = imageStyles.map(style => {
     <div>
     {isPreviewModalOpen && <ImagePreviewModal imageUrl={selectedImage} onClose={closeModal} />}
 
-    {isReferBackModelOpen&&<ReferBackModal  onUpdate={(referbackOption,referbackimageaarray)=>{setselectedReferbackOption(referbackOption);setSelectedImagesReferback(referbackimageaarray)}}  onClose={()=>setIsReferBackModelOpen(false)}/>}
+    {isReferBackModelOpen&&<ReferBackModal  reportData={reportData} onUpdate={(referbackOption,referbackimageaarray)=>{setselectedReferbackOption(referbackOption);setSelectedImagesReferback(referbackimageaarray)}}  onClose={()=>setIsReferBackModelOpen(false)}/>}
 
 
     <div  className="top-bar">
@@ -1228,7 +1264,7 @@ const updatedImageStyles = imageStyles.map(style => {
           { id: 'inspection-details', title: 'Inspection Details' },
           { id: 'update-status', title: 'Update Status' },
 
-          { id: 'full-report', title: 'Full Report' },
+          { id: 'declaration', title: 'Declaration' },
         ]}
       />
  </div>
@@ -1321,10 +1357,13 @@ const updatedImageStyles = imageStyles.map(style => {
             <tr>
               <td><strong>Email ID:</strong></td>
               <td>{reportData?.proposal_detail?.email}</td>
-              <td><strong>Nominee:</strong></td>
-              <td>{reportData?.proposal_detail?.nominee_name}</td>
+              <td><strong>Additional Email ID:</strong></td>
+              <td>{reportData?.proposal_detail?.al_email}</td>
+             
             </tr>
             <tr>
+            <td><strong>Nominee:</strong></td>
+              <td>{reportData?.proposal_detail?.nominee_name}</td>
               <td><strong>Address:</strong></td>
               <td>{reportData?.proposal_detail?.insured_address}</td>
             </tr>
@@ -1427,7 +1466,7 @@ const updatedImageStyles = imageStyles.map(style => {
 
   <div style={{display:'flex',justifyContent:'center'}}>
 
- {reportData?.breakin_details?.video ? <video style={{ width: '70%', height: '80%',padding:'10px' ,   boxShadow:'0 0 5px rgba(0, 0, 0, 0.1)'/* Add shadow for depth */
+ {reportData?.breakin_details?.video ? <video style={{ width: '70%', height: '500px',padding:'10px' ,   boxShadow:'rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;'/* Add shadow for depth */
 }} controls>
           <source src={`${reportData?.breakin_details?.video}`} type="video/webm" />
         </video>:<h2>No Video has been Uploaded</h2>}
@@ -1473,17 +1512,54 @@ const updatedImageStyles = imageStyles.map(style => {
         <textarea value={adminComment}  onChange={handleChangeText} style={{width:'100%',height:'150px'}} placeholder="Enter text"></textarea>
         <div className="button-container">
               <button onClick={handleSubmit} className="download-button" >Update Status </button>
+              {/* <PDFDownloadLink document={<InspectionReportPdf  />} fileName="document.pdf">
+        {({ loading }) => (loading ? 'Generating document...' : 'Download PDF')}
+      </PDFDownloadLink> */}
             </div>
       </div>
 
     </>
       }
 
+{reportData&& <>  <div  id="declaration" className="report-section">
+        <h2>Declaration</h2>
+
+        <h4>Agent Declaration</h4>
+
+        <div style={{display:'flex',alignItems:'flex-start'}}>
+        <input
+          type="checkbox"
+          id="declarationCheckbox"
+          checked={isDecalarationChecked}
+          onChange={handleDeclarationCheckbox}
+        />
+        <p htmlFor="declarationCheckbox">
+          I/We hereby declare, conform and agree that:- ‡ The Motor vehicle proposed for insurance after a break in cover has not met with any accident giving rise to any claim by a Third Party for injury or death caused to any person or damages to any property.
+          I have presented the same vehicle for pre-insurance inspection, which I have proposed for insurance. Identification details noted/photographs taken by the inspecting officials are correct.
+          If later on, at anytime it is found that inspected vehicle and damaged/accidental vehicles are different then neither any claim nor any indemnity in respect of either own damage or third party death or injury or property damage loss nor any benefit shall be available to me/us..
+          Vehicle has been visually inspected in my/ our presence. No damage or no fact which is material to acceptance of this proposal has been hidden/ undisclosed/ withheld by me/us. Damages of vehicle as noted/photographs taken by the inspecting officials are correct.
+          I/We also agree that damages mentioned as per inspection photographs/video shall be excluded in the event of any claim being lodged during the policy period.
+        </p>
+      </div> 
+
+     <h4>PROPOSER SIGNTURE AND DECLARATION - </h4>
+     <p> I HEREBY AGREE THAT DAMAGES NOTICES DURING THIS INSPECTION SHALL BE EXCLUDED IN THE EVENT OF ANY CLAIM BEING LADGE </p>
+
+     <img src={reportData?.proposal_detail?.customer_signature} style={{width:'150px',height:'150px'}}alt="Signature" />
+     <div style={{display:'flex',justifyContent:'flex-end'}}>
+
+     <button className="print-button" onClick={handlePrint}>Print</button>
+     </div>
+</div>
+
+    </>
+      }
 
 
-  {/* **********************Full Inspection Report Div************** */}
 
-   {reportData &&   <div id="full-report" className="report-section ">
+  {/* **********************Full Inspection Report PDF Div************** */}
+
+   {reportData &&   <div id="full-report" style={{display:'none'}} className="report-section ">
     <h2>Full Inspection Report</h2>
   
 <div className="report-container">
@@ -1491,7 +1567,6 @@ const updatedImageStyles = imageStyles.map(style => {
       <h1 className="report-title">Inspection Report</h1>
 
       <div  className="report-section">
-        <h2>Proposal Details</h2>
       {reportData&& <>  <div className="report-section">
         <h2>Proposal Info</h2>
         <table className="data-table">
@@ -1571,10 +1646,13 @@ const updatedImageStyles = imageStyles.map(style => {
             <tr>
               <td><strong>Email ID:</strong></td>
               <td>{reportData?.proposal_detail?.email}</td>
-              <td><strong>Nominee:</strong></td>
-              <td>{reportData?.proposal_detail?.nominee_name}</td>
+              <td><strong>Additional Email ID:</strong></td>
+              <td>{reportData?.proposal_detail?.al_email}</td>
+             
             </tr>
             <tr>
+            <td><strong>Nominee:</strong></td>
+              <td>{reportData?.proposal_detail?.nominee_name}</td>
               <td><strong>Address:</strong></td>
               <td>{reportData?.proposal_detail?.insured_address}</td>
             </tr>
@@ -1628,61 +1706,82 @@ const updatedImageStyles = imageStyles.map(style => {
             <td> {reportData?.qsn_ans?.question_ans[inspection[index + 1].breakin_inspection_post_question_id]??'Not Submitted'}</td>
 
             {inspection[index + 1] && (
-              <React.Fragment>
+              <>
                 <td><strong>{inspection[index + 1].question}:</strong></td>
                 {/* <td>{inspection[index + 1].label}</td> */}
                 <td> {reportData?.qsn_ans?.question_ans[inspection[index + 1].breakin_inspection_post_question_id]??'Not Submitted'}</td>
 
-              </React.Fragment>
+              </>
             )}
           </tr>
         )
       ))}
     </tbody>
   </table>
-  <h2 className='page-break'>Inspection Image Reports</h2>
-
+  <h2>Inspection Image Reports</h2>
   <div className="inspection-data-container">
-    {InspectedImages.map((item, index) => (
-      index % 2 === 0 && (
-        <div key={index} className="inspection-data-row">
-          <div className="inspection-item">
-            {item.Inspection_Image!=='no_image.jpg' ? (
-                <>
-              <img src={item.Inspection_Image} alt={item.name} className="inspection-image" />
-            </>
-            ):<h4 className='inspection-name'>Image not uploaded</h4>}
-            <div className="inspection-name">{item.name}</div>
-       
-          </div>
-          {/* {data[index + 1] && (
-            <div key={index + 1} className="inspection-item">
-              {data[index + 1].sample_image_url && (
-                <img src={data[index + 1].sample_image_url} alt={data[index + 1].name} className="inspection-image" />
-                
+      {InspectedImages.map((item, index) => {
+        // Only render a row for the first item in each pair
+        if (index % 2 === 0) {
+          return (
+            <div key={index} className="inspection-data-row">
+              <div className="inspection-item">
+                {item.Inspection_Image !== 'no_image.jpg' ? (
+                  <img src={item.Inspection_Image} alt={item.name} className="inspection-image" />
+                ) : (
+                  <h4 className="inspection-name">Image not uploaded</h4>
+                )}
+                <div className="inspection-name">{item.name}</div>
+              </div>
+              {InspectedImages[index + 1] && (
+                <div key={index + 1} className="inspection-item">
+                  {InspectedImages[index + 1].Inspection_Image !== 'no_image.jpg' ? (
+                    <img src={InspectedImages[index + 1].Inspection_Image} alt={InspectedImages[index + 1].name} className="inspection-image" />
+                  ) : (
+                    <h4 className="inspection-name">Image not uploaded</h4>
+                  )}
+                  <div className="inspection-name">{InspectedImages[index + 1].name}</div>
+                </div>
               )}
-              <div className="inspection-name">{data[index + 1].name}</div>
             </div>
-          )} */}
-        </div>
-      )
-    ))}
-    
-  </div>
- 
- 
+          );
+        }
+        return null;
+      })}
+    </div>
+</div>
+      </div>
+       <div  id="update-status" className="report-section page-break">
+        <h2>Declaration</h2>
 
-  
+        <h4>Agent Declaration</h4>
+
+        <div style={{display:'flex',alignItems:'flex-start'}}>
+        <input
+          type="checkbox"
+          id="declarationCheckbox"
+          checked={true}
+          onChange={handleDeclarationCheckbox}
+        />
+        <p htmlFor="declarationCheckbox">
+          I/We hereby declare, conform and agree that:- ‡ The Motor vehicle proposed for insurance after a break in cover has not met with any accident giving rise to any claim by a Third Party for injury or death caused to any person or damages to any property.
+          I have presented the same vehicle for pre-insurance inspection, which I have proposed for insurance. Identification details noted/photographs taken by the inspecting officials are correct.
+          If later on, at anytime it is found that inspected vehicle and damaged/accidental vehicles are different then neither any claim nor any indemnity in respect of either own damage or third party death or injury or property damage loss nor any benefit shall be available to me/us..
+          Vehicle has been visually inspected in my/ our presence. No damage or no fact which is material to acceptance of this proposal has been hidden/ undisclosed/ withheld by me/us. Damages of vehicle as noted/photographs taken by the inspecting officials are correct.
+          I/We also agree that damages mentioned as per inspection photographs/video shall be excluded in the event of any claim being lodged during the policy period.
+        </p>
+      </div> 
+
+     <h4>PROPOSER SIGNTURE AND DECLARATION - </h4>
+     <p> I HEREBY AGREE THAT DAMAGES NOTICES DURING THIS INSPECTION SHALL BE EXCLUDED IN THE EVENT OF ANY CLAIM BEING LADGE </p>
+
+     <img src={reportData?.proposal_detail?.customer_signature} style={{width:'150px',height:'150px'}}alt="Signature" />
+
 
 </div>
 
-
-
-
-      </div>
-
+  
     
-      <button className="print-button" onClick={handlePrint}>Print</button>
     </div>
     </div>}
 

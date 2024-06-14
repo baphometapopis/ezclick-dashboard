@@ -5,6 +5,7 @@ import moment from "moment";
 import { styled } from "@mui/material/styles";
 import { borderRadius } from "@mui/system";
 import { useNavigate } from "react-router-dom";
+import { Link, Viewreport } from "../Constant/ImageConstant";
 // import CancelModal from "./Modal/PolicyModal/CancelModal";
 
 const BreakinProposalTable = ({ data, refresh }) => {
@@ -67,42 +68,51 @@ const getVariable = (status) => {
 
 
         return {
-          backgroundColor: "#FCD34D",
-          color: "#ffffff",
-          padding:'3px',
-          borderRadius:'8px'
+          backgroundColor: "#fff4cf",
+          color: "#edb600",
+          padding:'5px 8px',
+          borderRadius:'25px',
+          fontWeight:'bold'
         
         };
       case 1:
         return {
-          backgroundColor: "#00FFFF",
-          color: "#ffffff",
-          padding:'3px',
-          borderRadius:'8px'
+          backgroundColor: "#d9f0ff",
+          color: "#0878c4",
+          padding:'5px 8px',
+          borderRadius:'25px',
+          fontWeight:'bold'
+
         
         };
       case 2:
         return {
           backgroundColor: "#dc143c",
           color: "#ffffff",
-          padding:'3px',
-          borderRadius:'8px'
+          padding:'5px 8px',
+          borderRadius:'25px',
+          fontWeight:'bold'
+
         
         };
         case 3:
             return {
-              backgroundColor: "#FFA500",
-              color: "#ffffff",
-              padding:'3px',
-              borderRadius:'8px'
+              backgroundColor: "#ffdfa4",
+              color: "#FFA500",
+              padding:'5px 8px',
+              borderRadius:'25px',
+          fontWeight:'bold'
+
             
             };
             case 4:
                 return {
-                  backgroundColor: "#00A36C",
-                  color: "#ffffff",
-                  padding:'3px',
-                  borderRadius:'8px'
+                  backgroundColor: "#a9ffe2",
+                  color: "#00a36c",
+                  padding:'5px 8px',
+                  borderRadius:'25px',
+          fontWeight:'bold'
+
                 
                 };
       default:
@@ -110,6 +120,13 @@ const getVariable = (status) => {
         return {
           backgroundColor: "#D1D5DB",
           color: "#000000",
+          borderRadius:'25px',
+          padding:'5px 8px',
+          fontWeight:'bold'
+
+
+
+
         
         };
     }
@@ -183,10 +200,15 @@ const getVariable = (status) => {
 
       width: 230,
       renderCell: (params) => (
-        <div  style={{display:'flex',gap:'5px'}}>
-    {params?.row?.breakin_status!==0&& <div  onClick={()=>handleViewReports(params)}  style={{backgroundColor:"#007bff",width:'fit-content',padding:'5px',borderRadius:'6px',color:'white',cursor:'pointer'}} >View Reports </div>}
-   <div  onClick={()=>handleViewSuccesspage(params)}  style={{backgroundColor:"green",width:'fit-content',padding:'5px',borderRadius:'6px',color:'white',cursor:'pointer'}} >link </div>
+        <div  style={{display:'flex',gap:'25px'}}>
+    {/* {params?.row?.breakin_status!==0&& <div   style={{backgroundColor:"#007bff",width:'fit-content',padding:'5px',borderRadius:'6px',color:'white',cursor:'pointer'}} >View Reports </div>} */}
+   <img onClick={()=>handleViewSuccesspage(params)}  style={{width:'35px',cursor:'pointer'}} src={Link}/>
+{   params?.row?.breakin_status!==0&&  <img onClick={()=>handleViewReports(params)} style={{width:'35px',cursor:'pointer'}} src={Viewreport}/>
+}
 
+
+
+   
         </div>
       ), // Pass policy_no or id to PolicyCard
     },
@@ -327,3 +349,4 @@ const getVariable = (status) => {
 };
 
 export default BreakinProposalTable;
+

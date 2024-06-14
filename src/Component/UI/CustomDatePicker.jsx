@@ -1,35 +1,36 @@
-// DatePicker.js
-
 import React from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import './DatePicker.css';
 
-const CustomDatePicker = ({ label, required, selectedDate, onChange, startDate, endDate, placeholder, error }) => {
-  // Function to format the selected date to the desired format
-// Function to format the selected date to the desired format
-const handleDateChangeRaw = (e) => {
-  if (e) {
-    const formattedDate = new Date(e).toISOString().substring(0, 10);
-    onChange(formattedDate);
-  } else {
-    onChange(null); // Set the date to null if it's undefined or null
-  }
-};
+const CustomDatePicker = ({isDisabled, label, required, selectedDate, onChange, startDate, endDate, placeholder, error }) => {
+  // Function to add one year to a given date
+  const addOneYear = (date) => {
+    const newDate = new Date(date);
+    newDate.setFullYear(newDate.getFullYear() + 1);
+    return newDate.toISOString().substring(0, 10); // Return in YYYY-MM-DD format
+  };
 
+  // Handle date change
+  const handleDateChange = (event) => {
+    const date = event.target.value;
+    onChange(date);
+  };
+
+  // Determine the minDate by adding one year to the provided startDate or use the current date
+  const minDate = startDate ? addOneYear(startDate) : new Date().toISOString().substring(0, 10);
 
   return (
     <div className="form-group">
       <label>
         {label} {required && <span>*</span>}
       </label>
-      <DatePicker
-        selected={selectedDate==='0000-00-00'?'':selectedDate}
-        onChange={handleDateChangeRaw}
-        startDate={startDate}
-        endDate={endDate}
-        placeholderText={placeholder}
-        dateFormat="yyyy-MM-dd" // Set the date format for display (optional)
+      <input
+      disabled={isDisabled}
+        type="date"
+        value={selectedDate || ''}
+        onChange={handleDateChange}
+        min={minDate}
+        max={endDate || ''}
+        placeholder={placeholder}
         className={`date-picker ${error ? 'error' : ''}`}
       />
       {error && <div className="error-message">{error}</div>}

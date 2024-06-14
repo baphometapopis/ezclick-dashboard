@@ -27,12 +27,6 @@ const ProposalCard = ({ proposalNo, insuredName, registrationNo ,data,selectedPr
   );
 };
 
-
-const ProposalPage = () => {
-
-
-  const Navigate=useNavigate()
-  // Regex patterns for validation
 const mobileRegex = /^([789]\d{9})$/; // 10 digits only 
 const nameRegex = /^[a-zA-Z\s]+$/; // Alphabets and spaces only
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email pattern
@@ -45,8 +39,7 @@ const colorRegex = /^[a-zA-Z\s]+$/; // Alphabets and spaces only
 const chassisNumberRegex = /^[A-Za-z0-9]{10,20}$/;
 
 
-// Validation function
-const validateField = (fieldName, value) => {
+export const validateField = (fieldName, value) => {
   switch (fieldName) {
     case 'mobile_no':
       return mobileRegex.test(value);
@@ -54,6 +47,7 @@ const validateField = (fieldName, value) => {
     case 'nominee_name':
       return nameRegex.test(value);
     case 'email':
+    case 'additional_email':
       return emailRegex.test(value);
     case 'v_cc':
     case 'v_nill_depreciation':
@@ -70,6 +64,14 @@ const validateField = (fieldName, value) => {
       return true; // Return true for fields without validation
   }
 };
+const ProposalPage = () => {
+
+
+  const Navigate=useNavigate()
+  // Regex patterns for validation
+
+// Validation function
+
   const [LoginData,setLoginData]=useState({})
 
 const updateFormData = (data) => {
@@ -119,6 +121,7 @@ const updateFormData = (data) => {
     email: '',
     nominee_name: '',
     insured_address: '',
+    // additional_email:'',
 
     v_registration_no: '',
     v_product_type_id: '',
@@ -307,25 +310,25 @@ const handleChange = (e, field) => {
 
   if (field === 'insured_name'|| field === 'nominee_name'|| field==='v_color') {
     // Remove any non-alphabetic characters and trim to maximum 30 characters
-    value = value.replace(/[^a-zA-Z\s]/g, '').slice(0, 30);
+    value = value.replace(/[^a-zA-Z\s]/g, '').slice(0, 30).toUpperCase();
   }
 
 
   if (field === 'insured_address') {
     // Remove any non-alphabetic characters and trim to maximum 30 characters
-      value = value.slice(0, 65);
+      value = value.slice(0, 65).toUpperCase();;
   }
   if (field === 'v_registration_no') {
     // Remove any non-alphanumeric characters and limit to maximum 10 characters
-    value = value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 10);
+    value = value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 10).toUpperCase();;
   }
   if (field === 'v_chassis_no') {
     // Remove any non-alphanumeric characters and limit to maximum 10 characters
-    value = value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 20);
+    value = value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 20).toUpperCase();;
   }
   if (field === 'v_chassis_no') {
     // Remove any non-alphanumeric characters and limit to maximum 10 characters
-    value = value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 20);
+    value = value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 20).toUpperCase();;
   }
 
   if (field === 'v_odometer_reading') {
@@ -534,6 +537,9 @@ useEffect(()=>{
         label="Proposal End Date"
         name="proposal_end_date"
         required={true}
+        isDisabled={!formData.proposal_start_date}
+        
+        startDate={formData.proposal_start_date}
         selectedDate={formData.proposal_end_date}
         onChange={(e)=>handleDateChange(e,'proposal_end_date')}
         placeholder="select policy End date"
@@ -566,6 +572,15 @@ useEffect(()=>{
         placeholder="Enter email"
         error={formErrors.email}
       />
+      {/* <TextInput
+        label="Additional Email"
+        name="additional_email"
+        // required={true}
+        value={formData.additional_email}
+        onChange={(e)=>handleChange(e,'additional_email')}
+        placeholder="Enter Additional email"
+        error={formErrors.additional_email}
+      /> */}
       <TextInput
         label="Nominee Name"
         name="nominee_name"
