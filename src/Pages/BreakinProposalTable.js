@@ -20,7 +20,6 @@ const BreakinProposalTable = ({ data, refresh }) => {
 
 
   const handleViewReports=(params)=>{
-    console.log(params?.row)
     navigate('/viewReportPage',{state:{
       data:params?.row
     }})

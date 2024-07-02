@@ -1,37 +1,38 @@
 import React from 'react';
 import Select from 'react-select';
 import './Dropdown.css';
-import Tippy from "@tippyjs/react";
-import "tippy.js/dist/tippy.css";
-import { isDisabled } from '@testing-library/user-event/dist/utils';
 
-const Dropdown = ({ label, required, value, onChange, options, placeholder, error, inputClassName ,isDisabled,tippyContent}) => {
+const Dropdown = ({ label, required, value, onChange, options, placeholder, error, inputClassName, isDisabled }) => {
   const handleChange = (selectedOption) => {
-    onChange({ target: { value: selectedOption ? selectedOption.value : '' } });
+    onChange({ target: { value: selectedOption ? selectedOption.value : null } });
   };
+
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
       border: 'none',
       boxShadow: state.isFocused ? 'none' : 'none', // Remove box shadow only when focused
-      
     }),
   };
+
+  // Ensure that the Select component gets the correct value and clears properly
+  const selectValue = options.find(option => option.value == value) || null;
+
   return (
-   
     <div className="form-group">
       <label>
         {label} {required && <span>*</span>}
       </label>
    
       <Select
-        value={options.find(option => option.value === value)}
+        value={selectValue}
         onChange={handleChange}
         options={options}
         placeholder={placeholder}
         className={`dropdown ${error ? 'error' : ''} ${inputClassName}`}
         styles={customStyles}
         isDisabled={isDisabled}
+        isClearable // Make the dropdown clearable
 
       />
     

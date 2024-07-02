@@ -18,7 +18,6 @@ export const MyDropzoneComponent = ({ onFileSelect }) => {
       const dataArray = data.split("\n"); // Split CSV data by newline to get rows
       const numberOfRows = dataArray.length - 1; // Exclude header row
 
-      console.log("Number of rows:", numberOfRows);
       setnumberofRows(numberOfRows);
     };
 
@@ -37,7 +36,6 @@ export const MyDropzoneComponent = ({ onFileSelect }) => {
       },
       onDrop: (acceptedFiles) => {
         // Handle dropped files
-        console.log(acceptedFiles);
 
         // Read and parse each dropped file
         acceptedFiles.forEach((file) => {

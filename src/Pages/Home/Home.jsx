@@ -27,7 +27,6 @@ const HomePage = () => {
 
   const uploadExcel=async()=>{
 
-    console.log(selectedExcel)
 
    if(selectedExcel){ const res= await fileUpload(selectedExcel)
     if (res?.status) {
@@ -71,7 +70,6 @@ const HomePage = () => {
 const getUploadedExcelList=async()=>{
   const resData = await getfileUploadList()
 
-  console.log(resData)
   if(resData?.status){
     setuploadedList(resData?.data)
   }

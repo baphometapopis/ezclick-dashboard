@@ -9,7 +9,7 @@ import { Search } from '../Constant/ImageConstant';
 import './ProposalList.css'
 import Dropdown from '../Component/UI/Dropdown';
 import { fetchDataLocalStorage } from '../Util/LocalStorage';
-import { Anchor } from 'antd';
+import { Anchor,DatePicker } from 'antd';
 
 const  ProposalListPage=()=> {
 
@@ -119,7 +119,6 @@ const [windowWidth, setWindowWidth] = useState([window.innerWidth]);
       if (indexOfFirstRecord !== indexOfLastRecord) {
         getAllProposalListApi(listdata)
           .then((data) => {
-            console.log(data?.data)
             setPolicyList(data?.data);
             setTotalRecords(data?.total_count)
             const pagination = calculatePagination(
@@ -145,7 +144,6 @@ const [windowWidth, setWindowWidth] = useState([window.innerWidth]);
     
     // const getSearchValue = (prop) => {
     //   setfilterValue(prop);
-    //   // console.log(prop);
     //   GetProposalList();
     // };
   

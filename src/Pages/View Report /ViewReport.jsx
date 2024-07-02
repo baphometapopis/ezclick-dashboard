@@ -945,7 +945,6 @@ if(status==3){
 }
 
 const valuesArray = selectedImagesReferback?.map(item => item.value);
-console.log(valuesArray)
 
 
 const data ={proposal_id:reportData?.proposal_detail?.id,
@@ -1010,7 +1009,6 @@ const handleChangeText = (event) => {
 };
 
 const handleChangeStatus = (event) => {
-  console.log(event.target.value)
   setStatus(event.target.value);
   setError('');
 };
@@ -1037,92 +1035,159 @@ const openModal = (uri) => {
 
 
 
-const handlePrint = () => {
-if(!isDecalarationChecked){
+// const handlePrint = () => {
+// if(!isDecalarationChecked){
 
-  alert('Please Accept terms and Condition')
+//   alert('Please Accept terms and Condition')
 
-}
- else{ const printContents = document.querySelector('.report-container').innerHTML;
-  const printWindow = window.open('Inspection Report', 'Inspection Report', 'height=800,width=800');
+// }
+//  else{ const printContents = document.querySelector('.report-container').innerHTML;
+//   const printWindow = window.open('Inspection Report', 'Inspection Report', 'height=800,width=800');
 
-  printWindow.document.write('<html><head><title>Ezclick Vehicle Inspection Report</title>');
-  const footerLogo=Logo
+//   printWindow.document.write('<html><head><title>Ezclick Vehicle Inspection Report</title>');
+//   const footerLogo=Logo
 
-  // Inline CSS styles or link to external stylesheet
-  printWindow.document.write('<style>');
-  printWindow.document.write(`
-    body { font-family: Arial, sans-serif;  padding-bottom: 280px;
-    }
-   .header-logo { width: 100%; }
-   .report-title { font-size: 24px; font-weight: bold; text-align: center; margin-bottom: 20px; }
-   .report-section { margin-bottom: 20px; }
-   .data-table { width: 100%; border-collapse: collapse; }
-   .page-break{ page-break-before: always; }
-   .inspection-item { width: 300px; padding: 10px; margin: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-   .inspection-data-container { display: flex; flex-wrap: wrap; }
-   .data-table th,.data-table td { border: 1px solid #000; padding: 8px; }
-   .inspection-data-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-   .inspection-data-table th,.inspection-data-table td { border: 1px solid #000; padding: 8px; }
-   .inspection-image { width: 100%; height:400px }
-   .button-container { text-align: center; margin-top: 20px; }
-   .download-button,.preview-button,.print-button { padding: 10px 20px; font-size: 16px; display: none; }
-   .footer {
-      position: fixed;
-      bottom: -10px;
-      left: 0;  
-      width: 100%;
-      background-color: #f0f0f0;
-      padding: 10px;
-      text-align:center:
-      border-top: 1px solid #ccc;
-    }
-  `);
-  printWindow.document.write('</style>');
+//   // Inline CSS styles or link to external stylesheet
+//   printWindow.document.write('<style>');
+//   printWindow.document.write(`
+//     body { font-family: Arial, sans-serif;  padding-bottom: 280px;
+//     }
+//    .header-logo { width: 100%; }
+//    .report-title { font-size: 24px; font-weight: bold; text-align: center; margin-bottom: 20px; }
+//    .report-section { margin-bottom: 20px; }
+//    .data-table { width: 100%; border-collapse: collapse; }
+//    .page-break{ page-break-before: always; }
+//    .inspection-item { width: 300px; padding: 10px; margin: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+//    .inspection-data-container { display: flex; flex-wrap: wrap; }
+//    .data-table th,.data-table td { border: 1px solid #000; padding: 8px; }
+//    .inspection-data-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+//    .inspection-data-table th,.inspection-data-table td { border: 1px solid #000; padding: 8px; }
+//    .inspection-image { width: 100%; height:400px }
+//    .button-container { text-align: center; margin-top: 20px; }
+//    .download-button,.preview-button,.print-button { padding: 10px 20px; font-size: 16px; display: none; }
+//    .footer {
+//       position: fixed;
+//       bottom: -10px;
+//       left: 0;  
+//       width: 100%;
+//       background-color: #f0f0f0;
+//       padding: 10px;
+//       text-align:center:
+//       border-top: 1px solid #ccc;
+//     }
+//   `);
+//   printWindow.document.write('</style>');
 
-  // Optionally link to external stylesheet
-  printWindow.document.write('<link rel="stylesheet" type="text/css" href="./ViewReport.css">');
+//   // Optionally link to external stylesheet
+//   printWindow.document.write('<link rel="stylesheet" type="text/css" href="./ViewReport.css">');
 
-  printWindow.document.write('</head><body>');
+//   printWindow.document.write('</head><body>');
 
-  // Write printContents to the print window
-  printWindow.document.write(printContents);
+//   // Write printContents to the print window
+//   printWindow.document.write(printContents);
 
-  // Add footer
-  printWindow.document.write('<div class="footer">');
-  printWindow.document.write(`
-  <div style="width: 100%; position: fixed; bottom: 0; left: 0; padding: 0px; background-color: #f0f0f0; border-top: 1px solid #ccc; display: flex; align-items: center;">
-  <img src="${footerLogo}" alt="Logo" style="width: 100px; height: 80px; margin-right: 10px;">
-  <p style="margin: 0;     position: absolute;
-  bottom: 45px;
-  left: 500px;">Inspection Date: ${new Date().toLocaleDateString()}</p>
-</div>
-`);  
-  printWindow.document.write('</div>');
+//   // Add footer
+//   printWindow.document.write('<div class="footer">');
+//   printWindow.document.write(`
+//   <div style="width: 100%; position: fixed; bottom: 0; left: 0; padding: 0px; background-color: #f0f0f0; border-top: 1px solid #ccc; display: flex; align-items: center;">
+//   <img src="${footerLogo}" alt="Logo" style="width: 100px; height: 80px; margin-right: 10px;">
+//   <p style="margin: 0;     position: absolute;
+//   bottom: 45px;
+//   left: 500px;">Inspection Date: ${new Date().toLocaleDateString()}</p>
+// </div>
+// `);  
+//   printWindow.document.write('</div>');
 
-  // Wait for all images to load before printing
-  const images = printWindow.document.querySelectorAll('img');
-  let imagesLoaded = 0;
+//   // Wait for all images to load before printing
+//   const images = printWindow.document.querySelectorAll('img');
+//   let imagesLoaded = 0;
 
-  const checkAllImagesLoaded = () => {
-    imagesLoaded++;
-    if (imagesLoaded === images.length) {
-      printWindow.document.close();
-      printWindow.print();
-    }
-  };
+//   const checkAllImagesLoaded = () => {
+//     imagesLoaded++;
+//     if (imagesLoaded === images.length) {
+//       printWindow.document.close();
+//       printWindow.print();
+//     }
+//   };
 
-  images.forEach(img => {
-    if (img.complete) {
-      checkAllImagesLoaded();
-    } else {
-      img.addEventListener('load', checkAllImagesLoaded);
-    }
-  });
+//   images.forEach(img => {
+//     if (img.complete) {
+//       checkAllImagesLoaded();
+//     } else {
+//       img.addEventListener('load', checkAllImagesLoaded);
+//     }
+//   });
 
-  printWindow.document.write('</body></html>');}
-};
+//   printWindow.document.write('</body></html>');}
+// };
   
+const handlePrint = () => {
+  if (!isDecalarationChecked) {
+    alert('Please Accept terms and Condition');
+  } else {
+    const printContents = document.querySelector('.report-container').innerHTML;
+    const printWindow = window.open('', 'Inspection Report', 'height=800,width=800');
+
+    printWindow.document.write('<html><head><title>Ezclick Vehicle Inspection Report</title>');
+
+    // Inline CSS styles or link to external stylesheet
+    printWindow.document.write('<style>');
+    printWindow.document.write(`
+      body { font-family: Arial, sans-serif; padding-bottom: 280px; }
+      .header-logo { width: 100%; }
+      .report-title { font-size: 24px; font-weight: bold; text-align: center; margin-bottom: 20px; }
+      .report-section { margin-bottom: 20px; }
+      .data-table { width: 100%; border-collapse: collapse; }
+      .page-break { page-break-before: always; }
+      .inspection-item { width: 300px; padding: 10px; margin: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+      .inspection-data-container { display: flex; flex-wrap: wrap; }
+      .data-table th, .data-table td { border: 1px solid #000; padding: 8px; }
+      .inspection-data-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+      .inspection-data-table th, .inspection-data-table td { border: 1px solid #000; padding: 8px; }
+      .inspection-image { width: 100%; height: 400px; }
+      .button-container { text-align: center; margin-top: 20px; }
+      .download-button, .preview-button, .print-button { padding: 10px 20px; font-size: 16px; display: none; }
+      .footer {
+        position: fixed;
+        bottom: -10px;
+        left: 0;
+        width: 100%;
+        background-color: #f0f0f0;
+        padding: 10px;
+        text-align: center;
+        border-top: 1px solid #ccc;
+      }
+    `);
+    printWindow.document.write('</style>');
+
+    // Optionally link to external stylesheet
+    printWindow.document.write('<link rel="stylesheet" type="text/css" href="./ViewReport.css">');
+
+    printWindow.document.write('</head><body>');
+
+    // Write printContents to the print window
+    printWindow.document.write(printContents);
+
+    // Add footer
+    printWindow.document.write('<div class="footer">');
+    printWindow.document.write(`
+      <div style="width: 100%; position: fixed; bottom: 0; left: 0; padding: 0px; background-color: #f0f0f0; border-top: 1px solid #ccc; display: flex; align-items: center;">
+        <img src="${Logo}" alt="Logo" style="width: 100px; height: 80px; margin-right: 10px;">
+        <p style="margin: 0; position: absolute; bottom: 45px; left: 500px;">Inspection Date: ${new Date().toLocaleDateString()}</p>
+      </div>
+    `);  
+    printWindow.document.write('</div>');
+
+    printWindow.document.write('</body></html>');
+
+    // Ensure document is fully loaded before printing
+    printWindow.document.close();
+    printWindow.onload = () => {
+      printWindow.print();
+      printWindow.close();
+    };
+  }
+};
 
   
   
@@ -1184,7 +1249,6 @@ const referenceData = [
 
 const handleReportData=async()=>{
   const localres=await fetchDataLocalStorage('claim_loginDashboard',)
-  console.log('Report Res>>>>>>>>>>>>>>>>>>>',localres)
   
 const data ={proposal_id:ldata?.state?.data?.id,
   user_id:localres?.data?.user_details?.id,

@@ -1,7 +1,6 @@
 import { API_BASE_URL } from "./Api_Endpoint";
 
 export const submitForm=async(data,user_id)=>{
-  console.log(data)
     try {
         var myHeaders = new Headers();
         var formdata = new FormData();
@@ -68,7 +67,6 @@ export const submitForm=async(data,user_id)=>{
 
 
 export const UpdateAdminStatus=async(data)=>{
-  console.log(data)
     try {
 
   
@@ -120,7 +118,6 @@ export const UpdateAdminStatus=async(data)=>{
 }
 
 export const updateAlternateEmail=async(data)=>{
-  console.log(data)
     try {
 
   

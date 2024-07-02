@@ -204,7 +204,6 @@ const getDropDownMaster=async()=>{
 const  getLocalData=()=>{
 
   const getLocalData= fetchDataLocalStorage('claim_loginDashboard')
-  console.log('fetched local datat form localk ',getLocalData?.data)
 
   setLoginData(getLocalData?.data)
 
@@ -265,6 +264,12 @@ const setSelectedProposalData=async(data)=>{
     });
 
     if(field==='v_make_id'){
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        v_model_id:'',
+        v_variant_id:''
+
+      }));
       const make = await getModel(selectedValue)
 
 
@@ -277,6 +282,10 @@ const setSelectedProposalData=async(data)=>{
 
 
     if(field==='v_model_id'){
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        v_variant_id:''
+      }));
       const Variant = await getVariant(selectedValue)
 
       if(Variant?.status){
@@ -383,7 +392,6 @@ const   handleSearchSubmit =async()=>{
 
 }
 const handleSubmit = async () => {
-  console.log(formData)
 
   let hasError = false;
   const updatedFormErrors = { ...formErrors };
@@ -464,6 +472,7 @@ useEffect(()=>{
   getDropDownMaster()
   getLocalData()
 },[])
+useEffect(()=>{},[formData,modelDropdown,makeDropdown,VariantDropdown])
 
   return (
     <div>
@@ -491,7 +500,7 @@ useEffect(()=>{
 
       </div>
       <div>
-      {proposalData.map((proposal) => (
+      {proposalData?.map((proposal) => (
         <ProposalCard
           key={proposal.id}
           data={proposal}
@@ -604,7 +613,7 @@ useEffect(()=>{
         required={true}
         value={formData.v_make_id}
         onChange={(event) => handleDropdownChange(event, 'v_make_id')}
-        options={makeDropdown.map((make) => ({
+        options={makeDropdown?.map((make) => ({
           value: make.make_id,
           label: make.make_cleaned
         }))}
@@ -616,22 +625,24 @@ useEffect(()=>{
       <Dropdown
         label="Select Model"
         required={true}
-        value={formData.v_model_id}
+        value={formData.v_model_id??null}
+        
         onChange={(event) => handleDropdownChange(event, 'v_model_id')}
-        options={modelDropdown.map((v_model) => ({
+        options={modelDropdown?.map((v_model) => ({
           value: v_model.model_id,
           label: v_model.model_cleaned
         }))}
         isDisabled={formData.v_make_id?false:true}
         placeholder="Select a model"
         error={formErrors.v_model_id}
+        valueid='model_id'
       />
       <Dropdown
         label="Select Variant"
         required={true}
         value={formData.v_variant_id}
         onChange={(event) => handleDropdownChange(event, 'v_variant_id')}
-        options={VariantDropdown.map((v_variant) => ({
+        options={VariantDropdown?.map((v_variant) => ({
           value: v_variant.variant_id,
           label: v_variant.variant_cleaned
         }))}
@@ -674,9 +685,10 @@ useEffect(()=>{
           label="Vehicle Product Type"
           required={true}
           value={formData.v_product_type_id}
+          
 
           onChange={(event) => handleDropdownChange(event, 'v_product_type_id')}
-          options={productTypeDropdown.map((product) => ({
+          options={productTypeDropdown?.map((product) => ({
             value: product?.id,
             label: product?.label
           }))}
@@ -722,7 +734,7 @@ useEffect(()=>{
           value={formData.v_fuel_type_id}
 
           onChange={(event) => handleDropdownChange(event, 'v_fuel_type_id')}
-          options={fuleTypeDropdown.map((fuel) => ({
+          options={fuleTypeDropdown?.map((fuel) => ({
             value: fuel?.id,
             label: fuel?.name
           }))}
@@ -749,7 +761,7 @@ useEffect(()=>{
         required={true}
         value={formData.v_anti_theft_device_status}
         onChange={(event) => handleDropdownChange(event, 'v_anti_theft_device_status')}
-        options={truefalseoptions.map((option) => ({
+        options={truefalseoptions?.map((option) => ({
           value: option.value,
           label: option.label
         }))}
@@ -795,7 +807,7 @@ useEffect(()=>{
         required={true}
         value={formData.v_nill_depreciation}
         onChange={(event) => handleDropdownChange(event, 'v_nill_depreciation')}
-        options={truefalseoptions.map((option) => ({
+        options={truefalseoptions?.map((option) => ({
           value: option.value,
           label: option.label
         }))}

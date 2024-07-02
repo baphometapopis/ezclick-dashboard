@@ -1,7 +1,6 @@
 import { API_BASE_URL } from "./Api_Endpoint";
 
 export const getAllProposalListApi = async (data) => {
-    console.log(data);
   try {
   
 
@@ -27,7 +26,6 @@ export const getAllProposalListApi = async (data) => {
       requestOptions
     );
     const result = await response.text();
-    console.log(result);
 
     return JSON.parse(result);
   } catch (error) {

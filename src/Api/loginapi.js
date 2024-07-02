@@ -1,7 +1,6 @@
 import { API_BASE_URL } from "./Api_Endpoint";
 
 export const loginApi = async (email,password) => {
-//   console.log(id, file);
   try {
     var myHeaders = new Headers();
 

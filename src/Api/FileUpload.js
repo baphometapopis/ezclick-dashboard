@@ -23,7 +23,6 @@ export const fileUpload = async (file) => {
       requestOptions
     );
     const result = await response.text();
-    console.log(result);
 
     return JSON.parse(result);
   } catch (error) {
@@ -55,7 +54,6 @@ export const getfileUploadList = async () => {
       requestOptions
     );
     const result = await response.text();
-    console.log(result);
 
     return JSON.parse(result);
   } catch (error) {
