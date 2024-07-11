@@ -76,617 +76,618 @@ const ViewReportPage = () => {
       },
     ]
 
-const inspection=   [
-    {
-        "breakin_inspection_post_question_id": 1,
-        "question": "Grill",
-        "is_image": 1,
-        "order_id": 1,
-        "label": "grill",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 2,
-        "question": "Head Lamp(RT)",
-        "is_image": 1,
-        "order_id": 2,
-        "label": "head_lamprt",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 3,
-        "question": "Side Turn Light(LT)",
-        "is_image": 1,
-        "order_id": 4,
-        "label": "side_turn_lightlt",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 4,
-        "question": "Indicator Light(LT)",
-        "is_image": 1,
-        "order_id": 6,
-        "label": "indicator_lightlt",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 5,
-        "question": "Fog Lamp(LT)",
-        "is_image": 0,
-        "order_id": 8,
-        "label": "fog_lamplt",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 6,
-        "question": "Front Panel",
-        "is_image": 0,
-        "order_id": 10,
-        "label": "front_panel",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 7,
-        "question": "Bonnet",
-        "is_image": 0,
-        "order_id": 11,
-        "label": "bonnet",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 8,
-        "question": "Left Apron",
-        "is_image": 0,
-        "order_id": 12,
-        "label": "left_apron",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 9,
-        "question": "Right Apron",
-        "is_image": 0,
-        "order_id": 13,
-        "label": "right_apron",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 10,
-        "question": "Left Front Fender",
-        "is_image": 0,
-        "order_id": 14,
-        "label": "left_front_fender",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 11,
-        "question": "Left Front Door",
-        "is_image": 0,
-        "order_id": 15,
-        "label": "left_front_door",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 12,
-        "question": "Left Rear Door",
-        "is_image": 0,
-        "order_id": 16,
-        "label": "left_rear_door",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 13,
-        "question": "Left Pillar Front(A)",
-        "is_image": 0,
-        "order_id": 17,
-        "label": "left_pillar_fronta",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 14,
-        "question": "Left Pillar Center(B)",
-        "is_image": 0,
-        "order_id": 18,
-        "label": "left_pillar_centerb",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 15,
-        "question": "Left Pillar Rear(C)",
-        "is_image": 0,
-        "order_id": 19,
-        "label": "left_pillar_rearc",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 16,
-        "question": "Left Running Board",
-        "is_image": 0,
-        "order_id": 20,
-        "label": "left_running_board",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 17,
-        "question": "Left Qtr Panel",
-        "is_image": 0,
-        "order_id": 21,
-        "label": "left_qtr_panel",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 18,
-        "question": "boot",
-        "is_image": 0,
-        "order_id": 22,
-        "label": "boot",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 19,
-        "question": "Rear Bumper",
-        "is_image": 0,
-        "order_id": 23,
-        "label": "rear_bumper",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 20,
-        "question": "Tail lamp(LT)",
-        "is_image": 0,
-        "order_id": 24,
-        "label": "tail_lamplt",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 21,
-        "question": "Right Front Render",
-        "is_image": 0,
-        "order_id": 26,
-        "label": "right_front_render",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 22,
-        "question": "Right Front Door",
-        "is_image": 0,
-        "order_id": 27,
-        "label": "right_front_door",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 23,
-        "question": "Right Rear Door",
-        "is_image": 0,
-        "order_id": 28,
-        "label": "right_rear_door",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 24,
-        "question": "Right pillar Front(A)",
-        "is_image": 0,
-        "order_id": 29,
-        "label": "right_pillar_fronta",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 25,
-        "question": "Right Pillar Center(B)",
-        "is_image": 0,
-        "order_id": 30,
-        "label": "right_pillar_centerb",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 26,
-        "question": "Right Pillar Rear(C)",
-        "is_image": 0,
-        "order_id": 31,
-        "label": "right_pillar_rearc",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 27,
-        "question": "Right Running Board",
-        "is_image": 0,
-        "order_id": 32,
-        "label": "right_running_board",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 28,
-        "question": "Right Qtr Panel",
-        "is_image": 0,
-        "order_id": 33,
-        "label": "right_qtr_panel",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 29,
-        "question": "Floor/Silencer",
-        "is_image": 0,
-        "order_id": 34,
-        "label": "floor_silencer",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 30,
-        "question": "Rr View Mirror(LT)",
-        "is_image": 0,
-        "order_id": 35,
-        "label": "rr_view_mirrorlt",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 31,
-        "question": "Tyres/Rim",
-        "is_image": 0,
-        "order_id": 37,
-        "label": "tyres_rim",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 32,
-        "question": "Head Lamp(RT)",
-        "is_image": 0,
-        "order_id": 3,
-        "label": "head_lamprt",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 33,
-        "question": "Side Turn Light(RT)",
-        "is_image": 0,
-        "order_id": 5,
-        "label": "side_turn_lightrt",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 34,
-        "question": "Indicator Light(RT)",
-        "is_image": 0,
-        "order_id": 7,
-        "label": "indicator_lightrt",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 35,
-        "question": "Fog Lamp(RT)",
-        "is_image": 0,
-        "order_id": 9,
-        "label": "fog_lamprt",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 36,
-        "question": "Tail lamp(RT)",
-        "is_image": 0,
-        "order_id": 25,
-        "label": "tail_lamprt",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 37,
-        "question": "Rr View Mirror(RT)",
-        "is_image": 0,
-        "order_id": 36,
-        "label": "rr_view_mirrorrt",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    },
-    {
-        "breakin_inspection_post_question_id": 38,
-        "question": "Airbag",
-        "is_image": 0,
-        "order_id": 38,
-        "label": "airbag",
-        "answers_obj": {
-            "0": 1,
-            "1": 2,
-            "2": 3,
-            "3": 4,
-            "4": 5,
-            "5": 6,
-            "6": 7
-        }
-    }
-]
+// const inspection=   [
+//     {
+//         "breakin_inspection_post_question_id": 1,
+//         "question": "Grill",
+//         "is_image": 1,
+//         "order_id": 1,
+//         "label": "grill",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 2,
+//         "question": "Head Lamp(RT)",
+//         "is_image": 1,
+//         "order_id": 2,
+//         "label": "head_lamprt",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 3,
+//         "question": "Side Turn Light(LT)",
+//         "is_image": 1,
+//         "order_id": 4,
+//         "label": "side_turn_lightlt",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 4,
+//         "question": "Indicator Light(LT)",
+//         "is_image": 1,
+//         "order_id": 6,
+//         "label": "indicator_lightlt",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 5,
+//         "question": "Fog Lamp(LT)",
+//         "is_image": 0,
+//         "order_id": 8,
+//         "label": "fog_lamplt",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 6,
+//         "question": "Front Panel",
+//         "is_image": 0,
+//         "order_id": 10,
+//         "label": "front_panel",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 7,
+//         "question": "Bonnet",
+//         "is_image": 0,
+//         "order_id": 11,
+//         "label": "bonnet",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 8,
+//         "question": "Left Apron",
+//         "is_image": 0,
+//         "order_id": 12,
+//         "label": "left_apron",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 9,
+//         "question": "Right Apron",
+//         "is_image": 0,
+//         "order_id": 13,
+//         "label": "right_apron",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 10,
+//         "question": "Left Front Fender",
+//         "is_image": 0,
+//         "order_id": 14,
+//         "label": "left_front_fender",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 11,
+//         "question": "Left Front Door",
+//         "is_image": 0,
+//         "order_id": 15,
+//         "label": "left_front_door",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 12,
+//         "question": "Left Rear Door",
+//         "is_image": 0,
+//         "order_id": 16,
+//         "label": "left_rear_door",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 13,
+//         "question": "Left Pillar Front(A)",
+//         "is_image": 0,
+//         "order_id": 17,
+//         "label": "left_pillar_fronta",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 14,
+//         "question": "Left Pillar Center(B)",
+//         "is_image": 0,
+//         "order_id": 18,
+//         "label": "left_pillar_centerb",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 15,
+//         "question": "Left Pillar Rear(C)",
+//         "is_image": 0,
+//         "order_id": 19,
+//         "label": "left_pillar_rearc",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 16,
+//         "question": "Left Running Board",
+//         "is_image": 0,
+//         "order_id": 20,
+//         "label": "left_running_board",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 17,
+//         "question": "Left Qtr Panel",
+//         "is_image": 0,
+//         "order_id": 21,
+//         "label": "left_qtr_panel",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 18,
+//         "question": "boot",
+//         "is_image": 0,
+//         "order_id": 22,
+//         "label": "boot",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 19,
+//         "question": "Rear Bumper",
+//         "is_image": 0,
+//         "order_id": 23,
+//         "label": "rear_bumper",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 20,
+//         "question": "Tail lamp(LT)",
+//         "is_image": 0,
+//         "order_id": 24,
+//         "label": "tail_lamplt",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 21,
+//         "question": "Right Front Render",
+//         "is_image": 0,
+//         "order_id": 26,
+//         "label": "right_front_render",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 22,
+//         "question": "Right Front Door",
+//         "is_image": 0,
+//         "order_id": 27,
+//         "label": "right_front_door",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 23,
+//         "question": "Right Rear Door",
+//         "is_image": 0,
+//         "order_id": 28,
+//         "label": "right_rear_door",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 24,
+//         "question": "Right pillar Front(A)",
+//         "is_image": 0,
+//         "order_id": 29,
+//         "label": "right_pillar_fronta",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 25,
+//         "question": "Right Pillar Center(B)",
+//         "is_image": 0,
+//         "order_id": 30,
+//         "label": "right_pillar_centerb",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 26,
+//         "question": "Right Pillar Rear(C)",
+//         "is_image": 0,
+//         "order_id": 31,
+//         "label": "right_pillar_rearc",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 27,
+//         "question": "Right Running Board",
+//         "is_image": 0,
+//         "order_id": 32,
+//         "label": "right_running_board",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 28,
+//         "question": "Right Qtr Panel",
+//         "is_image": 0,
+//         "order_id": 33,
+//         "label": "right_qtr_panel",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 29,
+//         "question": "Floor/Silencer",
+//         "is_image": 0,
+//         "order_id": 34,
+//         "label": "floor_silencer",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 30,
+//         "question": "Rr View Mirror(LT)",
+//         "is_image": 0,
+//         "order_id": 35,
+//         "label": "rr_view_mirrorlt",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 31,
+//         "question": "Tyres/Rim",
+//         "is_image": 0,
+//         "order_id": 37,
+//         "label": "tyres_rim",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 32,
+//         "question": "Head Lamp(RT)",
+//         "is_image": 0,
+//         "order_id": 3,
+//         "label": "head_lamprt",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 33,
+//         "question": "Side Turn Light(RT)",
+//         "is_image": 0,
+//         "order_id": 5,
+//         "label": "side_turn_lightrt",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 34,
+//         "question": "Indicator Light(RT)",
+//         "is_image": 0,
+//         "order_id": 7,
+//         "label": "indicator_lightrt",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 35,
+//         "question": "Fog Lamp(RT)",
+//         "is_image": 0,
+//         "order_id": 9,
+//         "label": "fog_lamprt",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 36,
+//         "question": "Tail lamp(RT)",
+//         "is_image": 0,
+//         "order_id": 25,
+//         "label": "tail_lamprt",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 37,
+//         "question": "Rr View Mirror(RT)",
+//         "is_image": 0,
+//         "order_id": 36,
+//         "label": "rr_view_mirrorrt",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     },
+//     {
+//         "breakin_inspection_post_question_id": 38,
+//         "question": "Airbag",
+//         "is_image": 0,
+//         "order_id": 38,
+//         "label": "airbag",
+//         "answers_obj": {
+//             "0": 1,
+//             "1": 2,
+//             "2": 3,
+//             "3": 4,
+//             "4": 5,
+//             "5": 6,
+//             "6": 7
+//         }
+//     }
+// ]
 
+const [inspection,setInspection]=useState([])
 
 const imageInspection =  [
     {
@@ -1262,6 +1263,12 @@ const data ={proposal_id:ldata?.state?.data?.id,
 
       
     setReportData(reportRes);
+    let reports = reportRes?.qsn_ans?.inspection_question_answere_chunk || [];
+    let filteredRes = reports.filter(res => res?.user_id === data?.user_id && res?.breakin_case_id === data?.break_in_case_id);
+    
+    // console.log(filteredRes);
+    setInspection(filteredRes)
+    
 
       const resData = mapData(referenceData,imageInspection,reportRes?.breakin_details)
 
@@ -1349,10 +1356,9 @@ const updatedImageStyles = imageStyles.map(style => {
               <td>{reportData.breaking_case_id}</td>
             </tr>
             <tr>
-              <td><strong>Proposal Start Date:</strong></td>
-              <td>{reportData?.proposal_detail?.proposal_start_date}</td>
-              <td><strong>Proposal End Date:</strong></td>
-              <td>{reportData?.proposal_detail?.proposal_end_date}</td>
+              <td><strong>Inspection Start Date/Time:</strong></td>
+              <td>{reportData?.proposal_detail?.inspection_date_time}</td>
+             
             </tr>
           </tbody>
         </table>
@@ -1426,8 +1432,8 @@ const updatedImageStyles = imageStyles.map(style => {
              
             </tr>
             <tr>
-            <td><strong>Nominee:</strong></td>
-              <td>{reportData?.proposal_detail?.nominee_name}</td>
+            {/* <td><strong>Nominee:</strong></td>
+              <td>{reportData?.proposal_detail?.nominee_name}</td> */}
               <td><strong>Address:</strong></td>
               <td>{reportData?.proposal_detail?.insured_address}</td>
             </tr>
@@ -1473,18 +1479,18 @@ const updatedImageStyles = imageStyles.map(style => {
       </tr>
     </thead>
     <tbody>
-      {inspection.map((item, index) => (
+      {inspection?.map((item, index) => (
         index % 2 === 0 && (
           <tr key={index}>
             <td><strong>{item.question}:</strong></td>
             {/* <td>{item.label}</td> */}
-            <td> {reportData?.qsn_ans?.question_ans[inspection[index + 1].breakin_inspection_post_question_id]??'Not Submitted'}</td>
+            <td> {item?.answere??'Not Submitted'}</td>
 
             {inspection[index + 1] && (
               <React.Fragment>
                 <td><strong>{inspection[index + 1].question}:</strong></td>
                 {/* <td>{inspection[index + 1].label}</td> */}
-                <td> {reportData?.qsn_ans?.question_ans[inspection[index + 1].breakin_inspection_post_question_id]??'Not Submitted'}</td>
+                <td> {item?.answere??'Not Submitted'}</td>
 
               </React.Fragment>
             )}
@@ -1643,10 +1649,10 @@ const updatedImageStyles = imageStyles.map(style => {
               <td>{reportData.breaking_case_id}</td>
             </tr>
             <tr>
-              <td><strong>Proposal Start Date:</strong></td>
-              <td>{reportData?.proposal_detail?.proposal_start_date}</td>
-              <td><strong>Proposal End Date:</strong></td>
-              <td>{reportData?.proposal_detail?.proposal_end_date}</td>
+              <td><strong>Inspection Start Date/Time:</strong></td>
+              <td>{reportData?.proposal_detail?.inspection_date_time}</td>
+              {/* <td><strong>Proposal End Date:</strong></td>
+              <td>{reportData?.proposal_detail?.proposal_end_date}</td> */}
             </tr>
           </tbody>
         </table>
@@ -1715,8 +1721,8 @@ const updatedImageStyles = imageStyles.map(style => {
              
             </tr>
             <tr>
-            <td><strong>Nominee:</strong></td>
-              <td>{reportData?.proposal_detail?.nominee_name}</td>
+            {/* <td><strong>Nominee:</strong></td>
+              <td>{reportData?.proposal_detail?.nominee_name}</td> */}
               <td><strong>Address:</strong></td>
               <td>{reportData?.proposal_detail?.insured_address}</td>
             </tr>
@@ -1762,18 +1768,18 @@ const updatedImageStyles = imageStyles.map(style => {
 
     <tbody>
       
-      {inspection.map((item, index) => (
+      {inspection?.map((item, index) => (
         index % 2 === 0 && (
           <tr key={index}>
             <td><strong>{item.question}:</strong></td>
             {/* <td>{item.label}</td> */}
-            <td> {reportData?.qsn_ans?.question_ans[inspection[index + 1].breakin_inspection_post_question_id]??'Not Submitted'}</td>
+            <td> {item?.answere??'Not Submitted'}</td>
 
             {inspection[index + 1] && (
               <>
                 <td><strong>{inspection[index + 1].question}:</strong></td>
                 {/* <td>{inspection[index + 1].label}</td> */}
-                <td> {reportData?.qsn_ans?.question_ans[inspection[index + 1].breakin_inspection_post_question_id]??'Not Submitted'}</td>
+                <td> {item?.answere??'Not Submitted'}</td>
 
               </>
             )}

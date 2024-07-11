@@ -12,6 +12,7 @@ const SuccessPage = ({ proposalInfo }) => {
   const data = useLocation()
   const Navigate=useNavigate()
   const proposalNo=data?.state
+  console.log(proposalNo?.id)
   // const { proposalNumber, insuredName, registrationNumber } = proposalInfo;
 
   return (
@@ -33,7 +34,7 @@ const SuccessPage = ({ proposalInfo }) => {
       {/* Links to Open Link URL and Playstore */}
       <div className="links">
         <div className="link-container">
-          <a href={`https://ezclick-pwa.netlify.app/proposal-info/${encrypt(proposalNo.proposal_no)}`}>Open Link URL</a>
+          <a href={`https://demoezclick-pwa.netlify.app/proposal-info/${encrypt(String(proposalNo.id))}`}>Open Link URL</a>
         </div>
         {/* <div className="link-container">
           <a href="https://drive.google.com/drive/folders/1Zhb7bEPnyoPXCjvypn2hRb5vASZNlCr5?usp=drive_link">Playstore</a>
@@ -43,7 +44,7 @@ const SuccessPage = ({ proposalInfo }) => {
       {/* QR Code for Open Link URL and Playstore */}
       <div className="qr-codes">
         <div className="qr-code-container">
-          <QRCode value={`https://ezclick-pwa.netlify.app/proposal-info/${encrypt(proposalNo.proposal_no)}`} />
+          <QRCode value={`https://demoezclick-pwa.netlify.app/proposal-info/${encrypt(String(proposalNo.id))}`} />
         </div>
         {/* <div className="qr-code-container">
           <QRCode value="https://drive.google.com/drive/folders/1Zhb7bEPnyoPXCjvypn2hRb5vASZNlCr5?usp=drive_link" />

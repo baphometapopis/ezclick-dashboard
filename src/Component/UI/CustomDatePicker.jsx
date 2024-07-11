@@ -1,7 +1,7 @@
 import React from 'react';
 import './DatePicker.css';
 
-const CustomDatePicker = ({isDisabled, label, required, selectedDate, onChange, startDate, endDate, placeholder, error }) => {
+const CustomDatePicker = ({isDisabled, label, required, selectedDate, onChange, startDate, endDate, placeholder, error ,type}) => {
   // Function to add one year to a given date
   const addOneYear = (date) => {
     const newDate = new Date(date);
@@ -12,6 +12,7 @@ const CustomDatePicker = ({isDisabled, label, required, selectedDate, onChange, 
   // Handle date change
   const handleDateChange = (event) => {
     const date = event.target.value;
+    console.log(date)
     onChange(date);
   };
 
@@ -25,7 +26,7 @@ const CustomDatePicker = ({isDisabled, label, required, selectedDate, onChange, 
       </label>
       <input
       disabled={isDisabled}
-        type="date"
+        type={type??'date'}
         value={selectedDate || ''}
         onChange={handleDateChange}
         min={minDate}

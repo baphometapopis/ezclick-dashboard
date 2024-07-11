@@ -86,6 +86,11 @@ const updateFormData = (data) => {
     ...(data.v_make_id && { v_make_id: data.v_make_id }),
     ...(data.proposal_no && { proposal_no: data.proposal_no }),
     ...(data.proposal_start_date && { proposal_start_date: data.proposal_start_date }),
+    ...(data.proposal_start_date && { proposal_start_date: data.proposal_start_date }),
+    ...(data.inspection_date_time && { inspection_date_time: data.inspection_date_time }),
+
+
+
     ...(data.proposal_end_date && { proposal_end_date: data.proposal_end_date }),
     ...(data.mobile_no && { mobile_no: data.mobile_no }),
     ...(data.email && { email: data.email }),
@@ -115,12 +120,14 @@ const updateFormData = (data) => {
     insured_name: '',
     v_make_id:'',
     proposal_no:'',
-    proposal_start_date: '',
-    proposal_end_date: '',
+    inspection_date_time:'',
+    // proposal_start_date: '',
+    // proposal_end_date: '',
     mobile_no: '',
     email: '',
-    nominee_name: '',
+    // nominee_name: '',
     insured_address: '',
+   
     // additional_email:'',
 
     v_registration_no: '',
@@ -143,13 +150,14 @@ const updateFormData = (data) => {
     // id:'',
     proposal_no:'',
     insured_name: '',
-    proposal_start_date: '',
-    proposal_end_date: '',
+    // proposal_start_date: '',
+    // proposal_end_date: '',
     mobile_no: '',
     v_make_id:'',
+    inspection_date_time:'',
 
     email: '',
-    nominee_name: '',
+    // nominee_name: '',
     insured_address: '',
 
     v_registration_no: '',
@@ -392,6 +400,7 @@ const   handleSearchSubmit =async()=>{
 
 }
 const handleSubmit = async () => {
+  console.log(formData)
 
   let hasError = false;
   const updatedFormErrors = { ...formErrors };
@@ -423,7 +432,6 @@ const handleSubmit = async () => {
   }
 
   // If everything is ok, log "submit form"
-
 
     const submitFormres =await  submitForm(formData, LoginData?.user_details?.id)
 
@@ -531,28 +539,28 @@ useEffect(()=>{},[formData,modelDropdown,makeDropdown,VariantDropdown])
             error={formErrors.proposal_no}
           />
 
-        <CustomDatePicker 
-        label="Proposal Start Date"
-        name="proposal_start_date"
+        {/* <CustomDatePicker 
+        label="Inspection Date"
+        name="inspection_date_time"
         required={true}
-        selectedDate={formData.proposal_start_date}
-        onChange={(e)=>handleDateChange(e,'proposal_start_date')}
-        placeholder="select policy start date"
-        error={formErrors.proposal_start_date}
-        />
+        selectedDate={formData.inspection_date}
+        startDate={new Date()}
+
+        onChange={(e)=>handleDateChange(e,'inspection_date')}
+        placeholder="select inspection_date"
+        error={formErrors.inspection_date}
+        /> */}
 
 
         <CustomDatePicker 
-        label="Proposal End Date"
-        name="proposal_end_date"
+        label="Inspection Date/Time"
+        name="inspection_date_time"
         required={true}
-        isDisabled={!formData.proposal_start_date}
-        
-        startDate={formData.proposal_start_date}
-        selectedDate={formData.proposal_end_date}
-        onChange={(e)=>handleDateChange(e,'proposal_end_date')}
-        placeholder="select policy End date"
-        error={formErrors.proposal_end_date}
+        type='datetime-local'
+        selectedDate={formData?.inspection_date_time}
+        onChange={(e)=>handleDateChange(e,'inspection_date_time')}
+        placeholder="select Inspection Time"
+        error={formErrors.inspection_date_time}
         />   
       <TextInput
         label="Insured Name"
@@ -590,7 +598,7 @@ useEffect(()=>{},[formData,modelDropdown,makeDropdown,VariantDropdown])
         placeholder="Enter Additional email"
         error={formErrors.additional_email}
       /> */}
-      <TextInput
+      {/* <TextInput
         label="Nominee Name"
         name="nominee_name"
         required={true}
@@ -598,7 +606,7 @@ useEffect(()=>{},[formData,modelDropdown,makeDropdown,VariantDropdown])
         onChange={(e)=>handleChange(e,'nominee_name')}
         placeholder="Enter nominee name"
         error={formErrors.nominee_name}
-      />
+      /> */}
       <TextInput
         label="Insured Address"
         name="insured_address"

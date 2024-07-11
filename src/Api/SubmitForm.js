@@ -8,13 +8,15 @@ export const submitForm=async(data,user_id)=>{
         // formdata.append("proposal_id", data?.id);
 
         formdata.append("insured_name", data?.insured_name);
-        formdata.append("proposal_start_date", data?.proposal_start_date);
-        formdata.append("proposal_end_date", data?.proposal_end_date);
+        formdata.append("inspection_date_time", data?.inspection_date_time);
+
+        // formdata.append("proposal_start_date", data?.proposal_start_date);
+        // formdata.append("proposal_end_date", data?.proposal_end_date);
         formdata.append("mobile_no", data?.mobile_no);
         formdata.append("email", data?.email);
         formdata.append("additional_email", data?.additional_email);
 
-        formdata.append("nominee_name", data?.nominee_name);
+        // formdata.append("nominee_name", data?.nominee_name);
         formdata.append("insured_address", data?.insured_address);
         // formdata.append("hypothecation_lease", data?.hypothecation_lease);
         formdata.append("registration_no", data?.v_registration_no);
