@@ -5,7 +5,8 @@ import moment from "moment";
 import { styled } from "@mui/material/styles";
 import { borderRadius } from "@mui/system";
 import { useNavigate } from "react-router-dom";
-import { Link, Viewreport } from "../Constant/ImageConstant";
+import { Link, ManualUploadIcon, Viewreport } from "../Constant/ImageConstant";
+import { setFormDatatoLocal } from "../Util/LocalStorage";
 // import CancelModal from "./Modal/PolicyModal/CancelModal";
 
 const BreakinProposalTable = ({ data, refresh }) => {
@@ -20,9 +21,12 @@ const BreakinProposalTable = ({ data, refresh }) => {
 
 
   const handleViewReports=(params)=>{
+
     navigate('/viewReportPage',{state:{
       data:params?.row
     }})
+
+    setFormDatatoLocal(params.row)
     
 
 
@@ -187,7 +191,7 @@ const getVariable = (status) => {
       headerClassName: "super-app-theme--header",
 
       valueFormatter: (params) => {
-        const formattedDate = moment(params.value).format("DD-MM-YYYY");
+        const formattedDate = moment(params).format("DD-MM-YYYY");
         return formattedDate;
       },
     },
@@ -200,10 +204,18 @@ const getVariable = (status) => {
       width: 230,
       renderCell: (params) => (
         <div  style={{display:'flex',gap:'25px'}}>
+          {/* <p >ManualUpload</p> */}
+     <img onClick={()=>navigate('/ManualUpload',{state:{
+      data:params?.row
+    }})}  style={{width:'35px',cursor:'pointer'}} src={ManualUploadIcon}/>
+
     {/* {params?.row?.breakin_status!==0&& <div   style={{backgroundColor:"#007bff",width:'fit-content',padding:'5px',borderRadius:'6px',color:'white',cursor:'pointer'}} >View Reports </div>} */}
    <img onClick={()=>handleViewSuccesspage(params)}  style={{width:'35px',cursor:'pointer'}} src={Link}/>
-{   params?.row?.breakin_status!==0&&  <img onClick={()=>handleViewReports(params)} style={{width:'35px',cursor:'pointer'}} src={Viewreport}/>
-}
+{/* {   params?.row?.is_declaration_accepted!==0&&  <img onClick={()=>handleViewReports(params)} style={{width:'35px',cursor:'pointer'}} src={Viewreport}/>
+} */}
+
+ <img onClick={()=>handleViewReports(params)} style={{width:'35px',cursor:'pointer'}} src={Viewreport}/>
+
 
 
 

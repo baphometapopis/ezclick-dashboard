@@ -7,7 +7,7 @@ export const getDropDownMasterApi = async () => {
 
 
     var requestOptions = {
-      method: "GET",
+      method: "POST",
       headers: myHeaders,
       redirect: "follow",
     };
@@ -56,11 +56,13 @@ export const getModel=async(makeID)=>{
 }
 
 
-export const getVariant=async(makeID)=>{
+export const getVariant=async(makeID,modelID)=>{
     try {
         var myHeaders = new Headers();
         var formdata = new FormData();
-        formdata.append("model_id", makeID);
+        formdata.append("model_id", modelID);
+        formdata.append("make_id", makeID);
+
         
     
     

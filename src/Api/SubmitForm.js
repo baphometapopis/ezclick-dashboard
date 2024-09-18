@@ -1,6 +1,7 @@
 import { API_BASE_URL } from "./Api_Endpoint";
 
-export const submitForm=async(data,user_id)=>{
+export const submitForm=async(data,user_id,is_commercial)=>{
+  console.log(data?.is_commercial?1:0,data)
     try {
         var myHeaders = new Headers();
         var formdata = new FormData();
@@ -35,11 +36,13 @@ export const submitForm=async(data,user_id)=>{
         formdata.append("nill_depreciation", data?.v_nill_depreciation);
         formdata.append("breakin_steps", 'checkpoint');
         formdata.append("user_id", user_id);
+        formdata.append("is_commercial", is_commercial?1:0);
 
 
 
 
 
+        
 
 
 

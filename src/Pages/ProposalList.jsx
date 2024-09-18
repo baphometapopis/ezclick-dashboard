@@ -10,6 +10,7 @@ import './ProposalList.css'
 import Dropdown from '../Component/UI/Dropdown';
 import { fetchDataLocalStorage } from '../Util/LocalStorage';
 import { Anchor,DatePicker } from 'antd';
+import FullPageLoader from '../Component/FullPageLoader';
 
 const  ProposalListPage=()=> {
 
@@ -17,6 +18,8 @@ const  ProposalListPage=()=> {
      searchParam:'',productType:'',Status:''
     }
       )
+
+      const [IsLoading,setIsLoading]=useState(true)
   // breakin_status  -> 0 : pending, 1: inprogress , 2: rejected , 3: referback, 4: completed, 
 
   const status=[
@@ -96,10 +99,12 @@ const [windowWidth, setWindowWidth] = useState([window.innerWidth]);
 
 
     const resetFilter=()=>{
+      window.location.reload()
       setFilterValue('')
       GetProposalList();
     }
     const GetProposalList = useCallback(() => {
+      setIsLoading(true)
       const decryptdata=''
       const data = fetchDataLocalStorage('claim_loginDashboard');
    
@@ -132,6 +137,8 @@ const [windowWidth, setWindowWidth] = useState([window.innerWidth]);
             console.error(error, "dsdsds");
           });
       }
+      setIsLoading(false)
+
     }, [filterValue, indexOfFirstRecord, indexOfLastRecord, totalRecords]);
   
 
@@ -181,50 +188,50 @@ const product=[
       "id": 2,
       "label": "Two Wheeler"
   },
-  {
-      "id": 3,
-      "label": "Commercial"
-  },
+  // {
+  //     "id": 3,
+  //     "label": "Commercial"
+  // },
   {
       "id": 4,
       "label": "Taxi (1-6)"
   },
-  {
-      "id": 5,
-      "label": "Threewheeler"
-  },
-  {
-      "id": 7,
-      "label": "Bus PCCV"
-  },
-  {
-      "id": 8,
-      "label": "Threewheeler"
-  },
+  // {
+  //     "id": 5,
+  //     "label": "Threewheeler"
+  // },
+  // {
+  //     "id": 7,
+  //     "label": "Bus PCCV"
+  // },
+  // {
+  //     "id": 8,
+  //     "label": "Threewheeler"
+  // },
   {
       "id": 9,
       "label": "Misc D"
   },
-  {
-      "id": 10,
-      "label": "3 wheeler (GCCV)"
-  },
-  {
-      "id": 11,
-      "label": "3 wheeler(PCCV) 6-17 Seater"
-  },
-  {
-      "id": 12,
-      "label": "Rickshow(PCCV) 3-6 Seater"
-  },
-  {
-      "id": 13,
-      "label": "Ecart Rickshow(GCCV)"
-  },
-  {
-      "id": 14,
-      "label": "Ecart rickshow(PCCV)"
-  }
+  // {
+  //     "id": 10,
+  //     "label": "3 wheeler (GCCV)"
+  // },
+  // {
+  //     "id": 11,
+  //     "label": "3 wheeler(PCCV) 6-17 Seater"
+  // },
+  // {
+  //     "id": 12,
+  //     "label": "Rickshow(PCCV) 3-6 Seater"
+  // },
+  // {
+  //     "id": 13,
+  //     "label": "Ecart Rickshow(GCCV)"
+  // },
+  // {
+  //     "id": 14,
+  //     "label": "Ecart rickshow(PCCV)"
+  // }
 ]
 const handleSearchChange = (event) => {
   
@@ -237,6 +244,8 @@ useEffect(()=>{},[filterValue])
 
     return (
       <div style={{height:'100%'}}>
+              {IsLoading&& <FullPageLoader loading={IsLoading} />}
+
       
      
         {/* <div className=" flex justify-center w-full p-8 mx md:w-[75%] max-w-[95%] bg-white lg:max-h-80 min-h-fit -mt-20 border border-neutral-light rounded mb-4 ">
@@ -246,7 +255,7 @@ useEffect(()=>{},[filterValue])
   <div className="search-bar1">
         <input
           type="text"
-          placeholder="Search Proposal No  ,Vehicle No..."
+          placeholder="Search Policy No....."
           value={filterValue?.search}
           onChange={handleSearchChange} // Update search keyword as user types
         /> 
@@ -269,7 +278,7 @@ useEffect(()=>{},[filterValue])
           // label="Vehicle Fuel Type"
           // required={true}
           // value={formData.v_fuel_type_id}
-
+value={filterValue.productType}
           onChange={(event) => handleDropdownChange(event, 'productType')}
           options={product.map((product) => ({
             value: product?.id,
@@ -283,7 +292,7 @@ useEffect(()=>{},[filterValue])
           // label="Vehicle Fuel Type"
           // required={true}
           // value={formData.v_fuel_type_id}
-
+          value={filterValue?.Status}
           onChange={(event) => handleDropdownChange(event, 'Status')}
           options={status.map((product) => ({
             value: product?.id,

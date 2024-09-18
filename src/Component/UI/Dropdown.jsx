@@ -16,7 +16,8 @@ const Dropdown = ({ label, required, value, onChange, options, placeholder, erro
   };
 
   // Ensure that the Select component gets the correct value and clears properly
-  const selectValue = options.find(option => option.value == value) || null;
+  const selectValue = options?.find(option => option.value == value || option.label==value) || null;
+
 
   return (
     <div className="form-group">

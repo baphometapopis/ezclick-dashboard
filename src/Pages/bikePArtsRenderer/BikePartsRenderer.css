@@ -1,0 +1,22 @@
+/* BikePartsRenderer.css */
+
+.bike-container {
+ 
+    margin: 20px auto;
+    position: relative;
+    max-width: 800px; /* Adjust as needed */
+  }
+  
+  .bike-hori-left,
+  .bike-vert,
+  .bike-hori-right {
+    position: relative;
+  }
+  
+  .bike-hori-left img,
+  .bike-vert img,
+  .bike-hori-right img {
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+  }

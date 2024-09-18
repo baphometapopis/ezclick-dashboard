@@ -6,8 +6,13 @@ import { validateField } from '../Pages/ProposalPage/ProposalPage';
 import { updateAlternateEmail } from '../Api/SubmitForm';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { makeApiCall } from '../Api/makeApiCall';
+import { Api_Endpoints } from '../Api/Api_Endpoint';
+import { showErrorToast } from '../Util/toastService';
 
 export function ReferBackModal({ onClose, onUpdate, reportData }) {
+
+  const [imageInspection,setInspectedImages]=useState([])
   const [isChecked, setIsChecked] = useState(false);
   const [selectEmail, setSelectEmail] = useState(false);
   const [additionalEmail, setAdditionalEmail] = useState('');
@@ -74,31 +79,7 @@ export function ReferBackModal({ onClose, onUpdate, reportData }) {
     }
   };
 
-  const imageInspection = [
-    { id: 1, name: "Odometer with Engine on Position", is_mand: 1, sample_image_url: "https://demo.ezclicktech.com/Ezclick/public/images/breakin_sample_image/ODOMETER.jpeg" },
-    { id: 2, name: "Windscreen Inside to Outside", is_mand: 1, sample_image_url: "https://demo.ezclicktech.com/Ezclick/public/images/breakin_sample_image/Windscreen-Inside-to-Outside.jpg" },
-    { id: 3, name: "Windscreen Outside to Inside", is_mand: 1, sample_image_url: "https://demo.ezclicktech.com/Ezclick/public/images/breakin_sample_image/Windscreen-Outside-to-Inside.jpg" },
-    { id: 4, name: "Front Image", is_mand: 1, sample_image_url: "https://demo.ezclicktech.com/Ezclick/public/images/breakin_sample_image/Front.jpg" },
-    { id: 5, name: "Left Image", is_mand: 1, sample_image_url: "https://demo.ezclicktech.com/Ezclick/public/images/breakin_sample_image/Left.jpeg" },
-    { id: 6, name: "Rear Image", is_mand: 1, sample_image_url: "https://demo.ezclicktech.com/Ezclick/public/images/breakin_sample_image/Rare.jpg" },
-    { id: 7, name: "Dicky Open", is_mand: 1, sample_image_url: "https://demo.ezclicktech.com/Ezclick/public/images/breakin_sample_image/Dicky.jpeg" },
-    { id: 8, name: "Right Image", is_mand: 1, sample_image_url: "https://demo.ezclicktech.com/Ezclick/public/images/breakin_sample_image/Right.jpg" },
-    { id: 9, name: "Engraved Chassis", is_mand: 1, sample_image_url: "https://demo.ezclicktech.com/Ezclick/public/images/breakin_sample_image/Engraved-Chassis.jpg" },
-    { id: 10, name: "Open Engine Compartment", is_mand: 1, sample_image_url: "https://demo.ezclicktech.com/Ezclick/public/images/breakin_sample_image/Engine-Compartment.jpg" },
-    { id: 11, name: "Under Carriage Image", is_mand: 1, sample_image_url: "https://demo.ezclicktech.com/Ezclick/public/images/breakin_sample_image/Undercarriage.jpg" },
-    { id: 12, name: "PUC Copy", is_mand: 1, sample_image_url: null },
-    { id: 13, name: "Dashboard Copy", is_mand: 1, sample_image_url: null },
-    { id: 14, name: "RC Copy", is_mand: 1, sample_image_url: "https://demo.ezclicktech.com/Ezclick/public/images/breakin_sample_image/RC-Copy.png" },
-    { id: 15, name: "Pervious Insurance Copy", is_mand: 1, sample_image_url: "https://demo.ezclicktech.com/Ezclick/public/images/breakin_sample_image/certificate-of-insurance-template.png" },
-    { id: 16, name: "Selfie with car", is_mand: 1, sample_image_url: null },
-    { id: 17, name: "Additional Image1", is_mand: 1, sample_image_url: null },
-    { id: 18, name: "Additional Image2", is_mand: 1, sample_image_url: null },
-    { id: 19, name: "Additional Image3", is_mand: 1, sample_image_url: null },
-    { id: 20, name: "Front Left Image", is_mand: 1, sample_image_url: null },
-    { id: 21, name: "Front Right Image", is_mand: 1, sample_image_url: null },
-    { id: 22, name: "Rear Left Image", is_mand: 1, sample_image_url: null },
-    { id: 23, name: "Rear Right Image", is_mand: 1, sample_image_url: null }
-  ];
+
 
   const formatOptions = imageInspection.map(option => ({
     value: option.id,
@@ -127,7 +108,22 @@ export function ReferBackModal({ onClose, onUpdate, reportData }) {
     setSelectEmail(true);
   };
 
-  useEffect(() => { }, [selectedOptions]);
+  const fetchData = async () => {
+    const res = await makeApiCall(Api_Endpoints.fetch_Image_inspection_question_Endpoint, 'POST', {
+      user_id:reportData?.proposal_detail?.user_id,
+      proposal_id: reportData?.proposal_detail?.id,
+      break_in_case_id: reportData?.breaking_case_id,
+      product_type_id: reportData?.proposal_detail?.v_product_type_id
+    });
+    if(res?.status){
+    setInspectedImages(res?.data);}else{
+      showErrorToast(res?.message)
+    }
+  };
+useEffect(()=>{fetchData()},[])
+
+  useEffect(() => { 
+  }, [selectedOptions]);
 
   return (
     <div className="modal">

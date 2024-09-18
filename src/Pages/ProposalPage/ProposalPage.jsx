@@ -13,8 +13,13 @@ import "react-toastify/dist/ReactToastify.css";
 import CustomDatePicker from '../../Component/UI/CustomDatePicker';
 import { submitForm } from '../../Api/SubmitForm';
 import { fetchDataLocalStorage } from '../../Util/LocalStorage';
-import { Navigate, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { ConsoleView } from 'react-device-detect';
+import { makeApiCall } from '../../Api/makeApiCall';
+import { Api_Endpoints } from '../../Api/Api_Endpoint';
+import { showErrorToast } from '../../Util/toastService';
+import FullPageLoader from '../../Component/FullPageLoader';
+import ToggleSwitch from '../../Component/UI/ToggleSwitch';
 
 
 const ProposalCard = ({ proposalNo, insuredName, registrationNo ,data,selectedProposal}) => {
@@ -25,18 +30,34 @@ const ProposalCard = ({ proposalNo, insuredName, registrationNo ,data,selectedPr
       <p>Registration Number: {registrationNo}</p>
     </div>
   );
-};
+};  const currentYear = new Date().getFullYear();
 
-const mobileRegex = /^([789]\d{9})$/; // 10 digits only 
+
+function getYearRegex() {
+  return new RegExp(`^(19[0-9]{2}|20[0-9]{2}|${currentYear})$`);
+}
+
+const mobileRegex = /^([6789]\d{9})$/; // 10 digits only 
 const nameRegex = /^[a-zA-Z\s]+$/; // Alphabets and spaces only
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email pattern
-const registrationNoRegex = /^[A-Z]{2}\d{2}[A-Z]{2}\d{4}$/;
+// const registrationNoRegex = /^[A-Z]{2}\d{2}[A-Z]{2}\d{4}$/;
+// const registrationNoRegex = /^\w{2}\d{2}\s?[A-Z]{1,2}\d{4}$/
+const registrationNoRegex = /^[A-Za-z0-9\W]{1,13}$/
+
+
+
+
 
 const ccRegex = /^\d+$/; // Numbers only
 const nilDepreciationRegex = /^(\d+(\.\d{1,2})?|\.\d{1,2})$/; // Numbers with optional decimal up to 2 places
-const yearRegex = /^\d{4}$/; // 4 digits only
+const yearRegex = getYearRegex(); // 4 digits only
 const colorRegex = /^[a-zA-Z\s]+$/; // Alphabets and spaces only
-const chassisNumberRegex = /^[A-Za-z0-9]{10,20}$/;
+const chassisNumberRegex = /^[A-Za-z0-9]{6,22}$/;
+const engineNumberPattern = /^[A-Za-z0-9]{6,20}$/;
+
+
+
+const addressRegex = /^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9\s/@&-]{4,50}$/;
 
 
 export const validateField = (fieldName, value) => {
@@ -56,8 +77,13 @@ export const validateField = (fieldName, value) => {
       return yearRegex.test(value);
       case 'v_chassis_no':
         return chassisNumberRegex.test(value);
+        case 'v_engine_no':
+        return engineNumberPattern.test(value);
       case 'v_registration_no':
         return registrationNoRegex.test(value);
+        case 'insured_address':
+          return addressRegex.test(value);
+
     case 'v_color':
       return colorRegex.test(value);
     default:
@@ -65,9 +91,10 @@ export const validateField = (fieldName, value) => {
   }
 };
 const ProposalPage = () => {
+  const [isLoading,setIsLoading]=useState(false)
 
 
-  const Navigate=useNavigate()
+  const navigate=useNavigate()
   // Regex patterns for validation
 
 // Validation function
@@ -143,9 +170,9 @@ const updateFormData = (data) => {
     v_color: '',
     // v_type_of_body: '',
     v_nill_depreciation: '',
-    v_cc:''
+    v_cc:'',
   });
-
+const [is_commercial,setis_commercial]=useState(false)
   const [formErrors, setFormErrors] = useState({
     // id:'',
     proposal_no:'',
@@ -198,16 +225,27 @@ const updateFormData = (data) => {
     setSearchKeyword(event.target.value); // Update search keyword as user types
   };
 
-const getDropDownMaster=async()=>{
-  const res = await getDropDownMasterApi();
+  const getProductType=async()=>{
+    const res = await makeApiCall(Api_Endpoints?.getProductType,"GET")
+
+    if(res?.status){
+
+  // getDropDownMaster()
+      setProductTypeDropdown(res?.product_type_master)
+    }else{
+      showErrorToast(res?.message)
+    }
+  }
+const getDropDownMaster=async(id)=>{
+  const res = await makeApiCall(Api_Endpoints?.getMasterDetails,"POST",{product_type_id:id})
+
   if(res?.status){
-  setProductTypeDropdown(res?.product_type_master)}
+
   setFuelTypeDropdown(res?.fuel_type_master)
   setMakeDropdown(res?.make_master)
   
-    setProductTypeDropdown(res?.product_type_master)
 
-
+  }
 }
 const  getLocalData=()=>{
 
@@ -231,7 +269,7 @@ const setSelectedProposalData=async(data)=>{
        
 
     }
-    const Variant = await getVariant(data?.v_model_id)
+    const Variant = await getVariant(formData?.v_make_id,data?.v_model_id)
 
     if(Variant?.status){
 
@@ -271,6 +309,25 @@ const setSelectedProposalData=async(data)=>{
       [field]: ''
     });
 
+    // productTypeDropdown v_product_type_id
+
+    if(field==='v_product_type_id'){
+      if(selectedValue!=1 && selectedValue!=2){
+        handleSetCommercialTrue(true)
+      }
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        v_make_id:'',
+        v_model_id:'',
+        v_variant_id:''
+
+      }));
+
+      
+     getDropDownMaster(selectedValue)
+    
+    }
+
     if(field==='v_make_id'){
       setFormData(prevFormData => ({
         ...prevFormData,
@@ -294,18 +351,25 @@ const setSelectedProposalData=async(data)=>{
         ...prevFormData,
         v_variant_id:''
       }));
-      const Variant = await getVariant(selectedValue)
+      const Variant = await getVariant(formData?.v_make_id,selectedValue)
 
       if(Variant?.status){
         setVariantDropdown(Variant?.variant_master)
 
       }
     }}
-
+  
   };
   
+
+  const handleSetCommercialTrue = async (e) => {
+    setis_commercial(e)
+ };
+  
+    
   const handleDateChange=(e,field)=>{
     setFormData({
+
       ...formData,
       [field]: e
     }); 
@@ -320,43 +384,26 @@ const setSelectedProposalData=async(data)=>{
 const handleChange = (e, field) => {
   let { value } = e.target;
 
-  // Strip non-numeric characters from the input value
-  if (field === 'mobile_no') {
-    value = value.replace(/\D/g, '').slice(0, 10);
-  }
+  // Define validation rules for each field
+  const validationRules = {
+    'mobile_no': value => value.replace(/\D/g, '').slice(0, 10),
+    'insured_name': value => value.replace(/[^a-zA-Z\s]/g, '').slice(0, 30).toUpperCase(),
+    'nominee_name': value => value.replace(/[^a-zA-Z\s]/g, '').slice(0, 30).toUpperCase(),
+    'v_color': value => value.replace(/[^a-zA-Z\s]/g, '').slice(0, 30).toUpperCase(),
+    'insured_address': value => value.slice(0, 65).toUpperCase(),
+    'v_registration_no': value=>value.slice(0, 13).toUpperCase(),
+    'v_chassis_no': value => value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 22).toUpperCase(),
+    'v_engine_no': value => value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 20).toUpperCase(),
 
-  if (field === 'insured_name'|| field === 'nominee_name'|| field==='v_color') {
-    // Remove any non-alphabetic characters and trim to maximum 30 characters
-    value = value.replace(/[^a-zA-Z\s]/g, '').slice(0, 30).toUpperCase();
-  }
+    'v_odometer_reading': value => value.replace(/\D/g, '').slice(0, 8),
+    'v_cc': value => value.replace(/\D/g, '').slice(0, 4),
+    'v_manufacture_year': value => value.replace(/\D/g, '').slice(0, 4)
+  };
 
-
-  if (field === 'insured_address') {
-    // Remove any non-alphabetic characters and trim to maximum 30 characters
-      value = value.slice(0, 65).toUpperCase();;
-  }
-  if (field === 'v_registration_no') {
-    // Remove any non-alphanumeric characters and limit to maximum 10 characters
-    value = value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 10).toUpperCase();;
-  }
-  if (field === 'v_chassis_no') {
-    // Remove any non-alphanumeric characters and limit to maximum 10 characters
-    value = value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 20).toUpperCase();;
-  }
-  if (field === 'v_chassis_no') {
-    // Remove any non-alphanumeric characters and limit to maximum 10 characters
-    value = value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 20).toUpperCase();;
-  }
-
-  if (field === 'v_odometer_reading') {
-    value = value.replace(/\D/g, '').slice(0, 8);
-  }
-  if (field === 'v_cc'||field==='v_manufacture_year') {
-    value = value.replace(/\D/g, '').slice(0, 4);
-  }
+  // Apply validation rule
+  value = validationRules[field] ? validationRules[field](value) : value;
 
   let updatedFormErrors = { ...formErrors };
-
   if (!validateField(field, value)) {
     updatedFormErrors = {
       ...updatedFormErrors,
@@ -369,6 +416,13 @@ const handleChange = (e, field) => {
     };
   }
 
+  if (field === 'v_manufacture_year' && value > currentYear) {
+    updatedFormErrors = {
+      ...updatedFormErrors,
+      [field]: `select below ${currentYear}`
+    };
+  }
+
   // Update form errors state
   setFormErrors(updatedFormErrors);
 
@@ -378,6 +432,7 @@ const handleChange = (e, field) => {
     [field]: value
   });
 };
+
 
 
 
@@ -399,68 +454,71 @@ const   handleSearchSubmit =async()=>{
   }
 
 }
+const hasFormErrors = (formErrors) => {
+  return Object.values(formErrors).some(value => value !== null && value !== '');
+};
 const handleSubmit = async () => {
-  console.log(formData)
 
   let hasError = false;
   const updatedFormErrors = { ...formErrors };
 
   // Check for errors in each required field
-
   Object.keys(formData).forEach((fieldName) => {
-
     const value = formData[fieldName];
+    const isEmpty = value === '' || value === null || value === undefined;
 
-
-    if (
-      
-      (value === '' || value === null || value === undefined)
-    ) {
+    if (isEmpty) {
       updatedFormErrors[fieldName] = `${fieldName.replace(/_/g, ' ')} is required`;
       hasError = true;
-    } else {
-      updatedFormErrors[fieldName] = '';
-    }
+    } 
   });
 
+ 
   // Update formErrors state
   setFormErrors(updatedFormErrors);
 
+
+  const result = hasFormErrors(formErrors);
+  
   // If there's an error, prevent form submission
-  if (hasError) {
-    return;
+  if (hasError || result) {
+    return true;
   }
 
   // If everything is ok, log "submit form"
+  try {
+    setIsLoading(true)
+    const submitFormRes = await submitForm(formData, LoginData?.user_details?.id,is_commercial);
 
-    const submitFormres =await  submitForm(formData, LoginData?.user_details?.id)
+    if (submitFormRes?.status) {
+      let data = { ...formData, ...submitFormRes };
 
-  if(submitFormres?.status){
-
-    Navigate('/SuccessPage',{state:formData})
-    toast.success(submitFormres?.message, {
-      position: "bottom-right",
-      autoClose: 3000,
-      theme:'colored',
-
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-    });
-  }else{
-    toast.error(submitFormres?.message, {
-      position: "bottom-right",
-      autoClose: 3000,
-      theme:'colored',
-
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-    });
+      navigate('/SuccessPage', { state: data });
+      toast.success(submitFormRes?.message, {
+        position: "bottom-right",
+        autoClose: 3000,
+        theme: 'colored',
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+    } else {
+      toast.error(submitFormRes?.message, {
+        position: "bottom-right",
+        autoClose: 3000,
+        theme: 'colored',
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+    }
+  } catch (error) {
+    console.error('Form submission error:', error);
   }
-
+  setIsLoading(false)
 
 };
+
 
 
 const truefalseoptions =[
@@ -477,14 +535,16 @@ const truefalseoptions =[
 
 
 useEffect(()=>{
-  getDropDownMaster()
+  getProductType()
   getLocalData()
 },[])
-useEffect(()=>{},[formData,modelDropdown,makeDropdown,VariantDropdown])
+useEffect(()=>{},[formData,modelDropdown,makeDropdown,VariantDropdown,is_commercial])
 
   return (
     <div>
+      {isLoading&& <FullPageLoader loading={isLoading}/>}
       {/* {!true? */}
+
       {false?
 
 
@@ -616,10 +676,29 @@ useEffect(()=>{},[formData,modelDropdown,makeDropdown,VariantDropdown])
         placeholder="Enter insured address"
         error={formErrors.insured_address}
       />
+        <ToggleSwitch onChange={(text)=>{ handleSetCommercialTrue(!is_commercial)}}   isChecked={is_commercial} option1={'Commercial'} option2={'Private'} defaultColor={'#EDF2F4'} label='Vehicle Type'/>
+
+        <Dropdown
+          label="Vehicle Product Type"
+          required={true}
+          value={formData.v_product_type_id}
+          
+
+          onChange={(event) => handleDropdownChange(event, 'v_product_type_id')}
+          options={productTypeDropdown?.map((product) => ({
+            value: product?.id,
+            label: product?.label
+          }))}
+
+          placeholder="Select Product type"
+          error={formErrors.v_product_type_id}
+        />
       <Dropdown
         label="Select Make"
         required={true}
         value={formData.v_make_id}
+        isDisabled={formData.v_product_type_id?false:true}
+
         onChange={(event) => handleDropdownChange(event, 'v_make_id')}
         options={makeDropdown?.map((make) => ({
           value: make.make_id,
@@ -638,7 +717,7 @@ useEffect(()=>{},[formData,modelDropdown,makeDropdown,VariantDropdown])
         onChange={(event) => handleDropdownChange(event, 'v_model_id')}
         options={modelDropdown?.map((v_model) => ({
           value: v_model.model_id,
-          label: v_model.model_cleaned
+          label: v_model.model_name
         }))}
         isDisabled={formData.v_make_id?false:true}
         placeholder="Select a model"
@@ -652,7 +731,7 @@ useEffect(()=>{},[formData,modelDropdown,makeDropdown,VariantDropdown])
         onChange={(event) => handleDropdownChange(event, 'v_variant_id')}
         options={VariantDropdown?.map((v_variant) => ({
           value: v_variant.variant_id,
-          label: v_variant.variant_cleaned
+          label: v_variant.variant_name
         }))}
         isDisabled={formData.v_model_id?false:true}
         placeholder="Select a Variant"
@@ -685,26 +764,11 @@ useEffect(()=>{},[formData,modelDropdown,makeDropdown,VariantDropdown])
         required={true}
         value={formData.v_registration_no}
         onChange={(e)=>handleChange(e,'v_registration_no')}
-        placeholder="EG . MH02AB1234"
+        placeholder="EG . MH-02-AB-1234"
         error={formErrors.v_registration_no}
       />
 
-        <Dropdown
-          label="Vehicle Product Type"
-          required={true}
-          value={formData.v_product_type_id}
-          
-
-          onChange={(event) => handleDropdownChange(event, 'v_product_type_id')}
-          options={productTypeDropdown?.map((product) => ({
-            value: product?.id,
-            label: product?.label
-          }))}
-          tippyContent={'select Model'}
-
-          placeholder="Select a make"
-          error={formErrors.v_make_id}
-        />
+      
 
       
    
@@ -820,7 +884,7 @@ useEffect(()=>{},[formData,modelDropdown,makeDropdown,VariantDropdown])
           label: option.label
         }))}
         placeholder="Select a status"
-        error={formErrors.v_anti_theft_device_status}
+        error={formErrors.v_nill_depreciation}
       />
 
       </div>

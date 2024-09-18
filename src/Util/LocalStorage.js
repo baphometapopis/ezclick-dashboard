@@ -27,3 +27,10 @@ export const fetchDataLocalStorage = (key) => {
     return null;
   }
 };
+
+export const setFormDatatoLocal=(selectedProposal)=>{
+  const data = fetchDataLocalStorage('claim_loginDashboard')
+  const submiteddata={...data,selectedProposal:selectedProposal}
+
+  storeDataLocalStorage('claim_loginDashboard',submiteddata)
+}

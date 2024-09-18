@@ -1,23 +1,37 @@
 import React from 'react';
 import './DatePicker.css';
 
-const CustomDatePicker = ({isDisabled, label, required, selectedDate, onChange, startDate, endDate, placeholder, error ,type}) => {
-  // Function to add one year to a given date
-  const addOneYear = (date) => {
-    const newDate = new Date(date);
-    newDate.setFullYear(newDate.getFullYear() + 1);
-    return newDate.toISOString().substring(0, 10); // Return in YYYY-MM-DD format
-  };
-
+const CustomDatePicker = ({
+  isDisabled,
+  label,
+  required,
+  selectedDate,
+  onChange,
+  startDate,
+  endDate,
+  placeholder,
+  error,
+  type
+}) => {
   // Handle date change
   const handleDateChange = (event) => {
     const date = event.target.value;
-    console.log(date)
     onChange(date);
   };
 
-  // Determine the minDate by adding one year to the provided startDate or use the current date
-  const minDate = startDate ? addOneYear(startDate) : new Date().toISOString().substring(0, 10);
+  // Function to get Indian Standard Time (IST) formatted as yyyy-MM-dd or yyyy-MM-ddThh:mm for datetime-local type
+  const getISTDateString = () => {
+    const now = new Date();
+    const istOffset = 5.5 * 60 * 60 * 1000; // IST offset in milliseconds (5 hours 30 minutes)
+    const istDate = new Date(now.getTime() + istOffset);
+    return type === 'datetime-local'
+      ? istDate.toISOString().substring(0, 16)
+      : istDate.toISOString().substring(0, 10);
+  };
+
+  // Determine the minDate and maxDate based on the type
+  const minDate = type === 'datetime-local' ? getISTDateString() : '';
+  const maxDate = getISTDateString();
 
   return (
     <div className="form-group">
@@ -25,12 +39,12 @@ const CustomDatePicker = ({isDisabled, label, required, selectedDate, onChange, 
         {label} {required && <span>*</span>}
       </label>
       <input
-      disabled={isDisabled}
-        type={type??'date'}
+        disabled={isDisabled}
+        type={type ?? 'date'}
         value={selectedDate || ''}
         onChange={handleDateChange}
         min={minDate}
-        max={endDate || ''}
+        max={maxDate}
         placeholder={placeholder}
         className={`date-picker ${error ? 'error' : ''}`}
       />

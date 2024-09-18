@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AddInspection, Dashboard, ListInspection, Logo, } from '../../Constant/ImageConstant'; // Importing the icons
+import { AddInspection, Dashboard, ListInspection, Logo, UpdateDatabase, } from '../../Constant/ImageConstant'; // Importing the icons
 import './Sidebar.css'; // Importing CSS file for styling
 
 const Sidebar = ({ isOpen }) => {
@@ -16,12 +16,16 @@ const Sidebar = ({ isOpen }) => {
           Dashboard
         </li>
         <li className="menu-item" onClick={()=>navigate('/proposal')}>
-          <img src={AddInspection} alt="Home Icon" className="menu-icon"  />
+          <img src={AddInspection} alt="Ad Breakin Icon" className="menu-icon"  />
           Add Breakin
         </li>
         <li className="menu-item" onClick={()=>navigate('/proposalList')}>
-          <img src={ListInspection} alt="Home Icon" className="menu-icon" />
+          <img src={ListInspection} alt="Breakin List Icon" className="menu-icon" />
           Breakin List
+        </li>
+        <li className="menu-item" onClick={()=>navigate('/UpdateList')}>
+          <img src={UpdateDatabase} alt="Database Icon" className="menu-icon" />
+          Update List
         </li>
        
       </ul>

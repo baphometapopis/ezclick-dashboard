@@ -9,7 +9,7 @@ export const getAllProposalListApi = async (data) => {
     formdata.append("length", data?.end);
     formdata.append("search", data?.search);
     formdata.append("user_id", data?.user_id);
-    formdata.append("product_Type_id", data?.product_Type_id);
+    formdata.append("product_type_id", data?.product_Type_id);
     formdata.append("breakin_status", data?.Status);
   
 
