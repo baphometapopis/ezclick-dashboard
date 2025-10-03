@@ -493,7 +493,7 @@ const handleSubmit = async () => {
     if (submitFormRes?.status) {
       let data = { ...formData, ...submitFormRes };
 
-      navigate('/SuccessPage', { state: data });
+      navigate('/EzDashboard/SuccessPage', { state: data });
       toast.success(submitFormRes?.message, {
         position: "bottom-right",
         autoClose: 3000,

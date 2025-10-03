@@ -11,13 +11,13 @@ import { NotFoundPage } from './Pages/NotFoundPage/NotFoundPage';
 import ProposalListPage from './Pages/ProposalList';
 import ProposalPage from './Pages/ProposalPage/ProposalPage';
 import SuccessPage from './Pages/SuccessPage/SuccessPage';
-import UpdateList from './Pages/Update Modal/UpdateList';
-import ViewReportPage from './Pages/View Report /ViewReport';
+import UpdateList from './Pages/UpdateModal/UpdateList';
+import ViewReportPage from './Pages/ViewReport/ViewReport';
 import { fetchDataLocalStorage } from './Util/LocalStorage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [ip, setIp] = useState('');
+  const [ip, setIp] = useState('');
   // const accesableIp = "59.152.55.202";
 
 // const  fetchIP=async()=>{
@@ -63,17 +63,17 @@ function App() {
         {/* If logged in successfully, navigate to Home page */}
         {isLoggedIn ? (
           <>
-            <Route path="/" element={<AppLayout><HomePage /></AppLayout>} />
-            <Route path="/proposal" element={<AppLayout><ProposalPage /></AppLayout>} />
-            <Route path="/proposalList" element={<AppLayout><ProposalListPage /></AppLayout>} />
-            <Route path="/ViewReportPage" element={<AppLayout><ViewReportPage /></AppLayout>} />
-            <Route path="/SuccessPage" element={<AppLayout><SuccessPage /></AppLayout>} />
-            <Route path="/ManualUpload" element={<AppLayout><ManualUpload /></AppLayout>} />
-            <Route path="/UpdateList" element={<AppLayout><UpdateList /></AppLayout>} />
+            <Route path="EzDashboard/" element={<AppLayout><HomePage /></AppLayout>} />
+            <Route path="EzDashboard/proposal" element={<AppLayout><ProposalPage /></AppLayout>} />
+            <Route path="EzDashboard/proposalList" element={<AppLayout><ProposalListPage /></AppLayout>} />
+            <Route path="EzDashboard/ViewReportPage" element={<AppLayout><ViewReportPage /></AppLayout>} />
+            <Route path="EzDashboard/SuccessPage" element={<AppLayout><SuccessPage /></AppLayout>} />
+            <Route path="EzDashboard/ManualUpload" element={<AppLayout><ManualUpload /></AppLayout>} />
+            <Route path="EzDashboard/UpdateList" element={<AppLayout><UpdateList /></AppLayout>} />
 
           </>
         ) : (
-          <Route path="/" element={<LoginPage />} />
+          <Route path="EzDashboard/" element={<LoginPage />} />
         )}
         {/* Catch-all route for undefined paths */}
         <Route path="*" element={<NotFoundPage />} />

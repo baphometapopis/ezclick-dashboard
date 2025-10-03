@@ -22,7 +22,7 @@ const BreakinProposalTable = ({ data, refresh }) => {
 
   const handleViewReports=(params)=>{
 
-    navigate('/viewReportPage',{state:{
+    navigate('/EzDashboard/viewReportPage',{state:{
       data:params?.row
     }})
 
@@ -32,7 +32,7 @@ const BreakinProposalTable = ({ data, refresh }) => {
 
   }
 const handleViewSuccesspage=(params)=>{
-  navigate('/SuccessPage',{state:params?.row})
+  navigate('/EzDashboard/SuccessPage',{state:params?.row})
 
 
 }
@@ -205,7 +205,7 @@ const getVariable = (status) => {
       renderCell: (params) => (
         <div  style={{display:'flex',gap:'25px'}}>
           {/* <p >ManualUpload</p> */}
-     <img onClick={()=>navigate('/ManualUpload',{state:{
+     <img onClick={()=>navigate('/EzDashboard/ManualUpload',{state:{
       data:params?.row
     }})}  style={{width:'35px',cursor:'pointer'}} src={ManualUploadIcon}/>
 

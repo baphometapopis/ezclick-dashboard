@@ -11,19 +11,19 @@ const Sidebar = ({ isOpen }) => {
     <div className={`sidebar ${isOpen ? 'open' : ''}`}>
     
       <ul className="sidebar-menu">
-        <li className="menu-item" onClick={()=>navigate('/')}>
+        <li className="menu-item" onClick={()=>navigate('/EzDashboard')}>
           <img src={Dashboard} alt="Home Icon" className="menu-icon" />
           Dashboard
         </li>
-        <li className="menu-item" onClick={()=>navigate('/proposal')}>
+        <li className="menu-item" onClick={()=>navigate('/EzDashboard/proposal')}>
           <img src={AddInspection} alt="Ad Breakin Icon" className="menu-icon"  />
           Add Breakin
         </li>
-        <li className="menu-item" onClick={()=>navigate('/proposalList')}>
+        <li className="menu-item" onClick={()=>navigate('/EzDashboard/proposalList')}>
           <img src={ListInspection} alt="Breakin List Icon" className="menu-icon" />
           Breakin List
         </li>
-        <li className="menu-item" onClick={()=>navigate('/UpdateList')}>
+        <li className="menu-item" onClick={()=>navigate('/EzDashboard/UpdateList')}>
           <img src={UpdateDatabase} alt="Database Icon" className="menu-icon" />
           Update List
         </li>

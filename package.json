@@ -2,7 +2,7 @@
   "name": "ezclick-dashboard",
   "version": "0.1.0",
   "private": true,
-  "homepage":"https://demo.ezclicktech.com/EzDashboard",
+  "homepage": "https://demo.ezclicktech.com/EzDashboard",
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
@@ -22,6 +22,7 @@
     "file-saver": "^2.0.5",
     "fs": "^0.0.1-security",
     "html2canvas": "^1.4.1",
+    "html2pdf.js": "^0.10.2",
     "jspdf": "^2.5.1",
     "jszip": "^3.10.1",
     "moment": "^2.30.1",

@@ -1025,6 +1025,7 @@ const data ={
     if(localres){
 
       const reportRes = await makeApiCall(Api_Endpoints?.getFullreportEndpoint,"POST",data)
+      
       if(reportRes?.status){
         const finaldata = reportRes?.proposal_detail
         setEditableData(finaldata)
@@ -1051,15 +1052,26 @@ const data ={
       setLocalData(localres)
 
 
-      console.log(response?.data?.length,'fetch_Checkpoint_inspection_question_Endpoint')
+      console.log(reportRes?.qsn_ans?.inspection_question_answere_chunk.length,'fetch_Checkpoint_inspection_question_Endpoint',response?.data[0]?.breakin_inspection_post_question_id,response?.data?.length)
       const initialState = {};
 
-      for (let i = 1; i <= response?.data?.length; i++) {
-        initialState[i] = 1;
-      }
-    
-setSelectedAnswers(initialState)
+      
+    let result={}
 
+     if(reportRes?.qsn_ans?.inspection_question_answere_chunk.length==0){  result = response?.data?.reduce((acc, item) => {
+        // Use 'breakin_inspection_post_question_id' as the key, and 'answer_ids' (assuming the first value) as the value
+        const answerId = item.answer_ids.split(",")[0]; // If you want only the first answer
+        acc[item.breakin_inspection_post_question_id] = parseInt(answerId); // Map the question ID to the answer ID
+        return acc;
+    }, {});
+}
+    // console.log(result,';lkjhgf')
+    
+      // if(reportRes?.qsn_ans?.inspection_question_answere_chunk.length===0&&reportRes?.qsn_ans?.inspection_question_answere.length){
+setSelectedAnswers(result)
+    // }
+
+    console.log(initialState,'lkjhgf')
       
     setReportData(reportRes);
     setIsShowCheckpointChecked(reportRes?.proposal_detail?.is_question_checkpoint==0?false:true)
@@ -1542,7 +1554,7 @@ const getProductType=async()=>{
     <p style={{color:'#2D3043',fontWeight:'bold',fontSize:'22px'}}> Edit Checkpoint</p>
       <img src={EditCheckpoint}  style={{width:'25px',height:'24px',cursor:'pointer'}} />
 </div>}
- {editCheckpoint ? 
+ {/* {editCheckpoint ? 
  <table className="inspection-data-table">
     <thead>
       <tr>
@@ -1551,6 +1563,7 @@ const getProductType=async()=>{
         <th>Question</th>
         <th>Label</th>
       </tr>
+      {console.log(selectedAnswers,';lkjhgv')}
     </thead>
     <tbody>
       {inspection?.map((item, index) => (
@@ -1566,7 +1579,7 @@ const getProductType=async()=>{
         value={selectedAnswers[item.breakin_inspection_post_question_id]??1}
 error={errorMessages[item.breakin_inspection_post_question_id]}
 onChange={(e) => handleRadioChange(inspection[index]?.breakin_inspection_post_question_id, e.target.value)}
-options={ Object.keys(item?.answers_obj).map((key) => ({
+options={ Object?.keys(item?.answers_obj).map((key) => ({
   value: key,
   label: item?.answers_obj[key]
 }))}
@@ -1577,6 +1590,7 @@ options={ Object.keys(item?.answers_obj).map((key) => ({
                   </td>
                 )}
 
+{console.log(selectedAnswers,item,';lkjhgv')}
 
                 {inspection[index + 1] && (
                   <React.Fragment>
@@ -1592,7 +1606,7 @@ options={ Object.keys(item?.answers_obj).map((key) => ({
         value={selectedAnswers[inspection[index+1].breakin_inspection_post_question_id]??1}
 error={errorMessages[inspection[index+1].breakin_inspection_post_question_id]}
 onChange={(e) => handleRadioChange(inspection[index+1]?.breakin_inspection_post_question_id, e.target.value)}
-options={ Object.keys(inspection[index+1]?.answers_obj).map((key) => ({
+options={ Object?.keys(inspection[index+1]?.answers_obj).map((key) => ({
   value: key,
   label: inspection[index+1]?.answers_obj[key]
 }))}
@@ -1631,7 +1645,7 @@ options={ Object.keys(inspection[index+1]?.answers_obj).map((key) => ({
         value={selectedAnswers[item.breakin_inspection_post_question_id]??inspection[index]?.answere}
 error={errorMessages[item.breakin_inspection_post_question_id]}
 onChange={(e) => handleRadioChange(item?.breakin_inspection_post_question_id, e.target.value)}
-options={ Object.keys(inspectionDropDown[index]?.answers_obj).map((key) => ({
+options={ Object?.keys(inspectionDropDown[index]?.answers_obj).map((key) => ({
   value: key,
   label: inspectionDropDown[index]?.answers_obj[key]
 }))}
@@ -1647,13 +1661,15 @@ options={ Object.keys(inspectionDropDown[index]?.answers_obj).map((key) => ({
                     <td><strong>{inspection[index + 1].question}:</strong></td>
                     
                       <td>
+{console.log(selectedAnswers,item,';lkjhgv')}
+
                         
                         <Dropdown
         
         value={selectedAnswers[item.breakin_inspection_post_question_id+1]??inspection[index+1]?.answere}
 error={errorMessages[item.breakin_inspection_post_question_id+1]}
 onChange={(e) => handleRadioChange(item?.breakin_inspection_post_question_id+1, e.target.value)}
-options={ Object.keys(inspectionDropDown[index+1]?.answers_obj).map((key) => ({
+options={ Object?.keys(inspectionDropDown[index+1]?.answers_obj).map((key) => ({
   value: key,
   label: inspectionDropDown[index+1]?.answers_obj[key]
 }))}
@@ -1671,7 +1687,118 @@ options={ Object.keys(inspectionDropDown[index+1]?.answers_obj).map((key) => ({
 {!inspection[0]?.answere&&                <button onClick={handleInspectionSubmit}>Submit</button>
 }
     </tbody>
-  </table>}
+  </table>} */}
+
+
+{editCheckpoint ? 
+   <table className="inspection-data-table">
+      <thead>
+         <tr>
+            <th>Question</th>
+            <th>Label</th>
+            <th>Question</th>
+            <th>Label</th>
+         </tr>
+      </thead>
+      <tbody>
+         {inspection?.map((item, index) => (
+            index % 2 === 0 && (
+               <tr key={index}>
+                  <td><strong>{item.question}:</strong></td>
+                  { item?.answere ? (
+                     <td>{item?.answere}</td>
+                  ) : (
+                     <td>
+                        <Dropdown
+                           value={selectedAnswers[item.breakin_inspection_post_question_id] ?? 1}
+                           error={errorMessages[item.breakin_inspection_post_question_id]}
+                           onChange={(e) => handleRadioChange(inspection[index]?.breakin_inspection_post_question_id, e.target.value)}
+                           options={ Object?.keys(item?.answers_obj || {}).map((key) => ({
+                              value: key,
+                              label: item?.answers_obj[key]
+                           }))}
+                           placeholder="Select Status "
+                        />
+                     </td>
+                  )}
+                  {inspection[index + 1] && (
+                     <React.Fragment>
+                        <td><strong>{inspection[index + 1].question}:</strong></td>
+                        {inspection[index + 1]?.answere ? (
+                           <td>{inspection[index + 1]?.answere}</td>
+                        ) : (
+                           <td>
+                              <Dropdown
+                                 value={selectedAnswers[inspection[index + 1].breakin_inspection_post_question_id] ?? 1}
+                                 error={errorMessages[inspection[index + 1].breakin_inspection_post_question_id]}
+                                 onChange={(e) => handleRadioChange(inspection[index + 1]?.breakin_inspection_post_question_id, e.target.value)}
+                                 options={ Object?.keys(inspection[index + 1]?.answers_obj || {}).map((key) => ({
+                                    value: key,
+                                    label: inspection[index + 1]?.answers_obj[key]
+                                 }))}
+                                 placeholder="Select Status "
+                              />
+                           </td>
+                        )}
+                     </React.Fragment>
+                  )}
+               </tr>
+            )
+         ))}
+         {!inspection[0]?.answere && <button onClick={handleInspectionSubmit}>Submit</button>}
+      </tbody>
+   </table> :
+   <table className="inspection-data-table">
+      <thead>
+         <tr>
+            <th>Question</th>
+            <th>Label</th>
+            <th>Question</th>
+            <th>Label</th>
+         </tr>
+      </thead>
+      <tbody>
+         {inspectionDropDown?.map((item, index) => (
+            index % 2 === 0 && (
+               <tr key={index}>
+                  <td><strong>{item.question}:</strong></td>
+                  <td>
+                     <Dropdown
+                        value={selectedAnswers[item.breakin_inspection_post_question_id] ?? inspection[index]?.answere}
+                        error={errorMessages[item.breakin_inspection_post_question_id]}
+                        onChange={(e) => handleRadioChange(item?.breakin_inspection_post_question_id, e.target.value)}
+                        options={ Object?.keys(item?.answers_obj || {}).map((key) => ({
+                           value: key,
+                           label: item?.answers_obj[key]
+                        }))}
+                        placeholder="Select Status "
+                     />
+                  </td>
+                  {inspection[index + 1] && (
+                     <React.Fragment>
+                        <td><strong>{inspection[index + 1].question}:</strong></td>
+                        <td>
+                           <Dropdown
+                              value={selectedAnswers[item.breakin_inspection_post_question_id + 1] ?? inspection[index + 1]?.answere}
+                              error={errorMessages[item.breakin_inspection_post_question_id + 1]}
+                              onChange={(e) => handleRadioChange(item?.breakin_inspection_post_question_id + 1, e.target.value)}
+                              options={ Object?.keys(inspectionDropDown[index + 1]?.answers_obj || {}).map((key) => ({
+                                 value: key,
+                                 label: inspectionDropDown[index + 1]?.answers_obj[key]
+                              }))}
+                              placeholder="Select Status "
+                           />
+                        </td>
+                     </React.Fragment>
+                  )}
+               </tr>
+            )
+         ))}
+         {!inspection[0]?.answere && <button onClick={handleInspectionSubmit}>Submit</button>}
+      </tbody>
+   </table>}
+
+
 {!editCheckpoint &&  <button onClick={handleEditInspectionSubmit}>Submit</button>
 }<div className='page-break'>
   <h2 >Inspection Image Reports</h2>
@@ -1681,6 +1808,7 @@ options={ Object.keys(inspectionDropDown[index+1]?.answers_obj).map((key) => ({
         <>
        {item.Inspection_Image!=='no_image.jpg' &&
         <div key={index} className="inspection-data-row">
+
           <div className="inspection-item">
           {item.Inspection_Image!=='no_image.jpg' ? (
                 <>

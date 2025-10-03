@@ -22,7 +22,7 @@ const ManualUpload = () => {
 
   const location = useLocation();
   const handleViewReports=(params)=>{
-    navigate('/viewReportPage',{replace:true,state:{
+    navigate('/EzDashboard/viewReportPage',{replace:true,state:{
       data:{ id: location?.state?.data?.id,
         breakin_inspection_id: location?.state?.data?.breakin_inspection_id,
         v_product_type_id:location?.state?.data?.v_product_type_id

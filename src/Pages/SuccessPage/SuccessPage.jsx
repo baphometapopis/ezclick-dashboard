@@ -21,7 +21,7 @@ const SuccessPage = () => {
   const navigate = useNavigate();
   const proposalNo = data?.state;
 
-  const proposalLink = `${open_url}/proposal-info/${encrypt(String(proposalNo?.id))}`;
+  const proposalLink = `${open_url}proposal-info/${encrypt(String(proposalNo?.id))}`;
 
   const handleCopyToClipboard = async () => {
     try {
@@ -76,7 +76,7 @@ const SuccessPage = () => {
         </WhatsappShareButton>
       </div>
 
-      <button onClick={() => navigate('/proposalList')} className="break-in-button">
+      <button onClick={() => navigate('/EzDashboard/proposalList')} className="break-in-button">
         Done
       </button>
     </div>
